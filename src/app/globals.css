@@ -1,0 +1,134 @@
+@import "tailwindcss";
+
+/* ============================================
+   倪海厦·经方中医问诊 — Design Tokens
+   Base: muuuuu.org Japanese minimalist
+   Adapted: 药石色系 + 经方气质
+   ============================================ */
+
+:root {
+  /* --- Base --- */
+  --bg-base: #edebe9;
+  --bg-card: rgba(255, 255, 255, 0.85);
+  --bg-card-solid: #ffffff;
+  --bg-surface: rgba(243, 243, 241, 0.4);
+
+  /* --- Foreground --- */
+  --fg-primary: #262626;
+  --fg-secondary: #313131;
+  --fg-muted: #6b6b6b;
+  --fg-inverse: #ffffff;
+
+  /* --- Accent: 药石色系 --- */
+  --accent-primary: #8b5e3c;
+  --accent-secondary: #5c7a6e;
+  --accent-warm: #c4854a;
+  --accent-cold: #4a6b8a;
+  --accent-danger: #8c3a3a;
+  --accent-ink: #2c2c2c;
+
+  /* --- 六经辨证色 --- */
+  --liujing-taiyang: #d4a843;
+  --liujing-yangming: #c45c3c;
+  --liujing-shaoyang: #5c8a6e;
+  --liujing-taiyin: #c4a35a;
+  --liujing-shaoyin: #3a5c7a;
+  --liujing-jueyin: #6b3a6b;
+
+  /* --- Layout --- */
+  --main-grid-width: 110rem;
+  --main-grid-width-reading: 72rem;
+  --side-nav-width: 23rem;
+  --grid-gap: 5rem;
+  --grid-outer: 1.5rem;
+  --section-radius: 1rem;
+  --card-radius: 0.625rem;
+  --pill-radius: 999px;
+
+  /* --- Shadows --- */
+  --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.06);
+  --shadow-thumbnail: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --shadow-elevated: 0 8px 24px rgba(0, 0, 0, 0.10);
+
+  /* --- Typography --- */
+  --base-line-height: 1.69;
+  --base-letter-spacing: 0.04rem;
+
+  /* --- Transitions --- */
+  --transition-fast: 150ms ease;
+  --transition-base: 250ms ease;
+  --transition-slow: 400ms ease;
+}
+
+@theme inline {
+  /* --- Colors --- */
+  --color-bg-base: var(--bg-base);
+  --color-bg-card: var(--bg-card);
+  --color-bg-card-solid: var(--bg-card-solid);
+  --color-bg-surface: var(--bg-surface);
+
+  --color-fg-primary: var(--fg-primary);
+  --color-fg-secondary: var(--fg-secondary);
+  --color-fg-muted: var(--fg-muted);
+  --color-fg-inverse: var(--fg-inverse);
+
+  --color-accent-primary: var(--accent-primary);
+  --color-accent-secondary: var(--accent-secondary);
+  --color-accent-warm: var(--accent-warm);
+  --color-accent-cold: var(--accent-cold);
+  --color-accent-danger: var(--accent-danger);
+  --color-accent-ink: var(--accent-ink);
+
+  --color-liujing-taiyang: var(--liujing-taiyang);
+  --color-liujing-yangming: var(--liujing-yangming);
+  --color-liujing-shaoyang: var(--liujing-shaoyang);
+  --color-liujing-taiyin: var(--liujing-taiyin);
+  --color-liujing-shaoyin: var(--liujing-shaoyin);
+  --color-liujing-jueyin: var(--liujing-jueyin);
+
+  /* --- Font Family --- */
+  --font-serif: "Noto Serif SC", "Source Han Serif SC", Georgia, serif;
+  --font-sans: "Noto Sans SC", "Source Han Sans SC", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", "Fira Code", monospace;
+
+  /* --- Border Radius --- */
+  --radius-section: var(--section-radius);
+  --radius-card: var(--card-radius);
+  --radius-pill: var(--pill-radius);
+}
+
+/* --- Global Styles --- */
+body {
+  background-color: var(--bg-base);
+  color: var(--fg-primary);
+  font-family: var(--font-sans);
+  line-height: var(--base-line-height);
+  letter-spacing: var(--base-letter-spacing);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  color: var(--accent-ink);
+}
+
+::selection {
+  background-color: var(--accent-primary);
+  color: var(--fg-inverse);
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.15);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.25);
+}
