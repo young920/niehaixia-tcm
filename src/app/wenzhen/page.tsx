@@ -30,9 +30,7 @@ const PRESET_SYMPTOMS = [
 ];
 
 /**
- * 铜版药典 问诊 — 临床病案记录式
- * 非聊天界面，而是病案格式的书写式布局
- * 每条对答如病案中的"主诉""辨证"条目
+ * 一保堂式 问诊 — 极简、轻盈
  */
 export default function WenzhenPage() {
   const [messages, setMessages] = useState<Message[]>([]);
@@ -98,55 +96,48 @@ export default function WenzhenPage() {
       <div className="flex-1 flex flex-col">
         <Header />
         <main className="flex-1 flex flex-col max-h-screen">
-          <div ref={scrollRef} className="flex-1 overflow-y-auto px-[var(--grid-outer)] py-8 lg:px-16">
-            {/* 空状态 — 病案首页格式 */}
+          <div ref={scrollRef} className="flex-1 overflow-y-auto px-[var(--grid-outer)] py-12 lg:px-20">
             {messages.length === 0 && (
-              <div className="max-w-2xl mx-auto">
-                <div className="section-title pt-4 mb-8">
-                  <h2 className="font-serif text-2xl text-accent-ink">经方问诊</h2>
-                  <p className="engraving-label mt-2">CONSULTATIO · EXAMINATIO · DIAGNOSIS</p>
+              <div className="max-w-xl mx-auto">
+                <div className="section-title pt-2 mb-10">
+                  <h2 className="font-sans text-lg text-fg-primary mb-1">经方问诊</h2>
+                  <p className="engraving-label">CONSULTATION</p>
                 </div>
 
-                <div className="plate-frame p-8 mb-8 copper-corners">
-                  <div className="space-y-5">
-                    <div className="border-b-2 border-copper/20 pb-4">
-                      <span className="engraving-label">CHIEF COMPLAINT · 主诉</span>
-                      <p className="text-fg-muted text-sm font-serif mt-1">请描述您的主要症状与不适</p>
-                    </div>
-                    <div className="grid grid-cols-3 gap-5">
-                      {[
-                        { label: "寒热", sub: "CHILL & FEVER" },
-                        { label: "汗出", sub: "SWEATING" },
-                        { label: "头身", sub: "HEAD & BODY" },
-                      ].map((field) => (
-                        <div key={field.label} className="border-b border-divider-rule pb-2">
-                          <span className="font-serif text-base text-copper">{field.label}</span>
-                          <p className="engraving-label mt-0.5">{field.sub}</p>
-                        </div>
-                      ))}
-                    </div>
-                    <div className="grid grid-cols-3 gap-5">
-                      {[
-                        { label: "二便", sub: "EXCRETION" },
-                        { label: "饮食", sub: "APPETITE" },
-                        { label: "睡眠", sub: "SLEEP" },
-                      ].map((field) => (
-                        <div key={field.label} className="border-b border-divider-rule pb-2">
-                          <span className="font-serif text-base text-copper">{field.label}</span>
-                          <p className="engraving-label mt-0.5">{field.sub}</p>
-                        </div>
-                      ))}
-                    </div>
+                <div className="mb-10">
+                  <div className="grid grid-cols-3 gap-4 mb-6">
+                    {[
+                      { label: "寒热", sub: "Chill & Fever" },
+                      { label: "汗出", sub: "Sweating" },
+                      { label: "头身", sub: "Head & Body" },
+                    ].map((field) => (
+                      <div key={field.label} className="border-b border-[var(--border-copper)] pb-3">
+                        <span className="font-sans text-sm text-fg-secondary">{field.label}</span>
+                        <p className="text-[0.6rem] text-fg-muted mt-0.5">{field.sub}</p>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="grid grid-cols-3 gap-4">
+                    {[
+                      { label: "二便", sub: "Excretion" },
+                      { label: "饮食", sub: "Appetite" },
+                      { label: "睡眠", sub: "Sleep" },
+                    ].map((field) => (
+                      <div key={field.label} className="border-b border-[var(--border-copper)] pb-3">
+                        <span className="font-sans text-sm text-fg-secondary">{field.label}</span>
+                        <p className="text-[0.6rem] text-fg-muted mt-0.5">{field.sub}</p>
+                      </div>
+                    ))}
                   </div>
                 </div>
 
-                <div className="space-y-2">
-                  <p className="engraving-label mb-3">COMMON SYMPTOMS · 常见症状</p>
+                <div>
+                  <p className="text-xs text-fg-muted mb-3">常见症状</p>
                   {PRESET_SYMPTOMS.map((symptom) => (
                     <button
                       key={symptom}
                       onClick={() => sendMessage(symptom)}
-                      className="block w-full text-left text-sm text-fg-secondary bg-transparent border-b border-sepia py-3 px-1 font-serif transition-[color,border-color] duration-[var(--transition-fast)] hover:text-accent-primary hover:border-copper"
+                      className="block w-full text-left text-sm text-fg-secondary bg-transparent border-b border-[var(--border-copper)] py-3 px-0 font-sans transition-colors duration-[var(--transition-fast)] hover:text-fg-primary"
                     >
                       {symptom}
                     </button>
@@ -156,23 +147,20 @@ export default function WenzhenPage() {
             )}
 
             {messages.map((msg, i) => (
-              <div key={msg.id} className="max-w-2xl mx-auto mb-6">
+              <div key={msg.id} className="max-w-xl mx-auto mb-6">
                 <div
-                  className="border-l-[3px] pl-5 py-4"
+                  className="border-l-2 pl-4 py-3"
                   style={{
-                    borderLeftColor: msg.role === "user" ? "var(--color-copper)" : "var(--accent-primary)",
+                    borderLeftColor: msg.role === "user" ? "var(--fg-muted)" : "var(--accent-primary)",
                     backgroundColor: msg.role === "user" ? "var(--bg-surface)" : "transparent",
                   }}
                 >
-                  <span className="engraving-label mb-2 block">
-                    {msg.role === "user" ? `§${i + 1} INTERROGATIO · 问` : `§${i + 1} DIAGNOSIS · 辨`}
-                  </span>
-                  <p className="text-sm text-fg-primary leading-relaxed whitespace-pre-wrap font-serif">
+                  <p className="text-sm text-fg-primary leading-relaxed whitespace-pre-wrap font-sans">
                     {msg.content}
                   </p>
                 </div>
                 {msg.liujing && (
-                  <div className="mt-2 pl-5">
+                  <div className="mt-2 pl-4">
                     <Tag variant={msg.liujing as "taiyang" | "yangming" | "shaoyang" | "taiyin" | "shaoyin" | "jueyin"}>
                       {LIUJING_LABELS[msg.liujing] ?? msg.liujing}经
                     </Tag>
@@ -182,35 +170,29 @@ export default function WenzhenPage() {
             ))}
 
             {loading && (
-              <div className="max-w-2xl mx-auto mb-6">
-                <div
-                  className="border-l-[3px] pl-5 py-4"
-                  style={{
-                    borderLeftColor: "var(--accent-primary)",
-                  }}
-                >
-                  <span className="engraving-label mb-2 block">DIAGNOSIS · 辨</span>
-                  <p className="text-sm text-fg-muted font-serif">倪师正在辨证…</p>
+              <div className="max-w-xl mx-auto mb-6">
+                <div className="border-l-2 pl-4 py-3" style={{ borderLeftColor: "var(--accent-primary)" }}>
+                  <p className="text-sm text-fg-muted font-sans">正在辨证…</p>
                 </div>
               </div>
             )}
           </div>
 
-          <div className="leather-bg border-t border-copper/30 px-[var(--grid-outer)] py-4 lg:px-16">
-            <div className="flex gap-3 max-w-2xl mx-auto">
+          <div className="bg-bg-base border-t border-[var(--border-copper)] px-[var(--grid-outer)] py-3 lg:px-20">
+            <div className="flex gap-3 max-w-xl mx-auto">
               <input
                 type="text"
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={(e) => e.key === "Enter" && sendMessage(input)}
                 placeholder="描述症状…"
-                className="flex-1 bg-transparent border-b border-[#8a7a68] px-2 py-2.5 text-sm text-[#d4c4a8] font-serif placeholder:text-[#7a6a58] focus:outline-none focus:border-[var(--color-copper)] transition-[border-color] duration-[var(--transition-fast)]"
+                className="flex-1 bg-transparent border-b border-[var(--border-copper-thick)] px-1 py-2 text-sm text-fg-primary font-sans placeholder:text-fg-muted/40 focus:outline-none focus:border-accent-primary transition-[border-color] duration-[var(--transition-fast)]"
                 disabled={loading}
               />
               <button
                 onClick={() => sendMessage(input)}
                 disabled={loading || !input.trim()}
-                className="text-sm font-serif text-[var(--color-copper)] px-4 py-2 border border-[var(--color-copper)] tracking-wider transition-[background-color,color,border-color] duration-[var(--transition-fast)] hover:bg-[var(--color-copper)] hover:text-[var(--fg-inverse)] disabled:opacity-40 disabled:pointer-events-none"
+                className="text-sm font-sans text-fg-inverse bg-accent-primary rounded-[var(--card-radius)] px-5 py-2 tracking-wider transition-[opacity] duration-[var(--transition-fast)] hover:opacity-85 disabled:opacity-30 disabled:pointer-events-none"
               >
                 问诊
               </button>

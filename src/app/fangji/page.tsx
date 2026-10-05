@@ -27,6 +27,9 @@ const FEATURED_FORMULAS = [
   { name: "乌梅丸", liujing: "jueyin", desc: "厥阴寒热错杂，清上温下" },
 ];
 
+/**
+ * 一保堂式 经方 — 极简、轻盈
+ */
 export default function FangjiPage() {
   const [query, setQuery] = useState("");
   const [result, setResult] = useState<string | null>(null);
@@ -60,30 +63,36 @@ export default function FangjiPage() {
         <Header />
         <main className="flex-1 px-[var(--grid-outer)] py-8 lg:px-16 lg:py-12 max-w-[var(--main-grid-width-reading)]">
           <div className="section-title pt-4 mb-6">
-            <h1 className="font-serif text-2xl text-accent-ink mb-2">经方速查</h1>
-            <p className="engraving-label">FORMULARY · 伤寒论129条 + 金匮23篇</p>
+            <h1 className="font-sans text-lg text-fg-primary mb-1">经方速查</h1>
+            <p className="engraving-label">FORMULARY</p>
           </div>
 
-          {/* Search bar with heavier border */}
-          <div className="flex gap-3 mb-6 max-w-xl border-b-2 border-copper/20 pb-4">
+          {/* Search */}
+          <div className="flex gap-3 mb-6 max-w-xl border-b border-[var(--border-copper)] pb-4">
             <input
               type="text" value={query} onChange={(e) => setQuery(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && search(query)}
               placeholder="输入方名，如：桂枝汤…"
-              className="flex-1 bg-transparent border-b-2 border-sepia px-1 py-2.5 text-sm text-fg-primary font-serif placeholder:text-fg-muted/50 focus:outline-none focus:border-copper transition-[border-color] duration-[var(--transition-fast)]"
+              className="flex-1 bg-transparent border-b border-[var(--border-copper-thick)] px-1 py-2.5 text-sm text-fg-primary font-sans placeholder:text-fg-muted/40 focus:outline-none focus:border-accent-primary transition-[border-color] duration-[var(--transition-fast)]"
               disabled={loading}
             />
-            <button onClick={() => search(query)} disabled={loading || !query.trim()}
-              className="text-sm font-serif text-copper px-5 py-2 border-2 border-copper tracking-wider transition-[background-color,color,border-color] duration-[var(--transition-fast)] hover:bg-copper hover:text-fg-inverse hover:border-copper disabled:opacity-40 disabled:pointer-events-none">
+            <button
+              onClick={() => search(query)}
+              disabled={loading || !query.trim()}
+              className="text-sm font-sans text-fg-inverse bg-accent-primary rounded-[var(--card-radius)] px-5 py-2 tracking-wider transition-[opacity] duration-[var(--transition-fast)] hover:opacity-85 disabled:opacity-30 disabled:pointer-events-none"
+            >
               查方
             </button>
           </div>
 
-          {/* Quick queries — 药签条目式 */}
-          <div className="flex flex-wrap gap-3 mb-8">
+          {/* Quick queries — 列表式 */}
+          <div className="mb-8 max-w-xl">
             {QUICK_QUERIES.map((q) => (
-              <button key={q.label} onClick={() => search(q.query)}
-                className="text-xs font-serif text-fg-secondary border border-sepia bg-vellum-warm px-3 py-1.5 transition-[color,border-color,background-color] duration-[var(--transition-fast)] hover:text-accent-primary hover:border-copper hover:bg-surface">
+              <button
+                key={q.label}
+                onClick={() => search(q.query)}
+                className="block w-full text-left text-sm text-fg-secondary bg-transparent border-b border-[var(--border-copper)] py-3 px-0 font-sans transition-colors duration-[var(--transition-fast)] hover:text-fg-primary"
+              >
                 {q.label}
               </button>
             ))}
@@ -91,14 +100,17 @@ export default function FangjiPage() {
 
           {!result && !loading && (
             <section>
-              <h2 className="section-title font-serif text-base text-accent-ink mb-4">常用经方</h2>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              <h2 className="section-title font-sans text-sm text-fg-primary mb-4">常用经方</h2>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                 {FEATURED_FORMULAS.map((f) => (
                   <button key={f.name} onClick={() => search(`${f.name}的组成、主治和临床应用`)} className="text-left">
                     <Card hover className="h-full">
                       <div className="flex items-center gap-2 mb-2">
-                        <span className="inline-block w-2.5 h-2.5 rotate-45" style={{ backgroundColor: `var(--liujing-${f.liujing})` }} />
-                        <span className="font-serif text-sm text-accent-ink">{f.name}</span>
+                        <span
+                          className="inline-block w-2 h-2 rounded-full"
+                          style={{ backgroundColor: `var(--liujing-${f.liujing})` }}
+                        />
+                        <span className="font-sans text-sm text-fg-primary">{f.name}</span>
                       </div>
                       <p className="text-xs text-fg-muted leading-relaxed">{f.desc}</p>
                     </Card>
@@ -108,12 +120,16 @@ export default function FangjiPage() {
             </section>
           )}
 
-          {loading && <div className="plate-frame p-8"><p className="text-sm text-fg-muted font-serif">正在检索经方…</p></div>}
+          {loading && (
+            <div className="py-8">
+              <p className="text-sm text-fg-muted font-sans">正在检索经方…</p>
+            </div>
+          )}
 
           {result && !loading && (
-            <div className="plate-frame p-8 copper-corners">
-              <div className="text-fg-primary text-sm leading-relaxed whitespace-pre-wrap font-serif">{result}</div>
-              <div className="mt-6 pt-4 border-t border-divider-rule">
+            <div className="border-l-2 pl-5 py-6" style={{ borderLeftColor: "var(--accent-primary)" }}>
+              <div className="text-fg-primary text-sm leading-relaxed whitespace-pre-wrap font-sans">{result}</div>
+              <div className="mt-6 pt-4 border-t border-[var(--border-copper)]">
                 <Button variant="ghost" onClick={() => { setResult(null); setQuery(""); }}>← 返回经方目录</Button>
               </div>
             </div>

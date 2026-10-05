@@ -8,18 +8,18 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 /**
- * 铜版药典 Button — 雕刻标签式
- * primary:   铜色线框 + 透明底 → hover 填铜色
- * secondary: 细线 + 羊皮纸底
- * ghost:     无框 + 铜色下划线
+ * 一保堂式 Button — 极轻按钮
+ * primary:   暖棕底 + 白字
+ * secondary: 白底 + 细边
+ * ghost:     无框文字
  */
 const VARIANT_CLASSES: Record<Variant, string> = {
   primary:
-    "border border-copper bg-transparent text-fg-primary rounded-none px-6 py-2.5 text-sm font-serif tracking-wider transition-[background-color,color,border-color] duration-[var(--transition-fast)] hover:bg-copper hover:text-fg-inverse hover:border-copper",
+    "bg-[var(--accent-primary)] text-fg-inverse rounded-[var(--card-radius)] px-5 py-2 text-sm font-sans tracking-wider transition-[opacity] duration-[var(--transition-fast)] hover:opacity-85",
   secondary:
-    "bg-vellum-warm border border-sepia text-fg-secondary rounded-none px-6 py-2.5 text-sm font-serif transition-[background-color,border-color] duration-[var(--transition-fast)] hover:bg-surface hover:border-copper",
+    "bg-bg-card border border-[var(--border-copper-thick)] text-fg-secondary rounded-[var(--card-radius)] px-5 py-2 text-sm font-sans transition-[border-color] duration-[var(--transition-fast)] hover:border-[var(--accent-primary)]",
   ghost:
-    "bg-transparent text-accent-primary text-sm font-serif transition-[opacity] duration-[var(--transition-fast)] hover:opacity-70 underline-offset-4 hover:underline decoration-copper/40",
+    "bg-transparent text-fg-muted text-sm font-sans transition-[color] duration-[var(--transition-fast)] hover:text-fg-primary",
 };
 
 export function Button({ variant = "primary", children, className = "", ...props }: ButtonProps) {

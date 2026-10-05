@@ -2,85 +2,85 @@
 
 /* ============================================
    倪海厦·经方中医问诊 — Design Tokens
-   Direction: 铜版药典 — Copperplate Pharmacopoeia
-   Vibe: Vintage botanical illustration book,
-         engraved plates, sepia inks, double rules,
-         leather binding, paper grain texture
+   Direction: 一保堂式极简 — Ippodo-style Minimal
+   Reference: https://www.ippodo-tea.co.jp/
+   Vibe: White space, light touch, content speaks,
+         warmth from the herbs not the chrome.
    ============================================ */
 
 :root {
-  /* --- Vellum / Parchment Backgrounds --- */
-  --bg-base: #f4ede4;
-  --bg-card: #faf6ef;
-  --bg-card-solid: #faf6ef;
-  --bg-surface: rgba(92, 74, 58, 0.06);
-  --bg-sidebar: #d9cfc0;
-  --bg-sidebar-hover: rgba(92, 74, 58, 0.08);
+  /* --- White / Near-White Backgrounds --- */
+  --bg-base: #ffffff;
+  --bg-card: #fafafa;
+  --bg-card-solid: #fafafa;
+  --bg-surface: rgba(0, 0, 0, 0.03);
+  --bg-sidebar: #f8f8f7;
+  --bg-sidebar-hover: rgba(0, 0, 0, 0.04);
 
-  /* --- Sepia Ink Foreground --- */
-  --fg-primary: #3c2a1a;
-  --fg-secondary: #5c4a3a;
-  --fg-muted: #8a7562;
-  --fg-inverse: #faf6ef;
+  /* --- Light Ink Foreground (一保堂: #4e4e4e / #3a3a3a) --- */
+  --fg-primary: #3a3a3a;
+  --fg-secondary: #4e4e4e;
+  --fg-muted: #8a8a8a;
+  --fg-inverse: #ffffff;
 
-  /* --- Accent: Copper & Verillion --- */
-  --accent-primary: #7a5230;
-  --accent-secondary: #6b4528;
-  --accent-warm: #a07030;
-  --accent-cold: #4a6b8a;
-  --accent-danger: #8b3a2a;
-  --accent-ink: #2a1e14;
+  /* --- Accent: Warm Brown + Vermillion --- */
+  --accent-primary: #93806f;
+  --accent-secondary: #7a6b5c;
+  --accent-warm: #93806f;
+  --accent-cold: #6a7a8a;
+  --accent-danger: #b34040;
+  --accent-ink: #2a2a2a;
 
-  /* --- Plate Materials: Copper · Sepia · Vellum --- */
-  --color-copper: #a07030;
-  --color-copper-light: rgba(160, 112, 48, 0.25);
-  --color-copper-faint: rgba(160, 112, 48, 0.10);
-  --color-sepia: #5c4a3a;
-  --color-sepia-light: rgba(92, 74, 58, 0.15);
-  --color-vellum: #f4ede4;
-  --color-vellum-warm: #faf6ef;
-  --color-ink: #2a1e14;
-  --color-ink-light: #8a7562;
-  --color-vermillion: #8b3a2a;
-  --color-leather: #3c2a1a;
-  --color-leather-warm: #5c3d2a;
+  /* --- Semantic Colors (replaces copper/sepia/leather) --- */
+  --color-copper: #93806f;
+  --color-copper-light: rgba(147, 128, 111, 0.15);
+  --color-copper-faint: rgba(147, 128, 111, 0.06);
+  --color-sepia: #7a6b5c;
+  --color-sepia-light: rgba(122, 107, 92, 0.12);
+  --color-vellum: #ffffff;
+  --color-vellum-warm: #fafafa;
+  --color-ink: #2a2a2a;
+  --color-ink-light: #8a8a8a;
+  --color-vermillion: #c0533b;
+  --color-leather: #3a3a3a;
+  --color-leather-warm: #4e4e4e;
 
-  /* --- 六经辨证色 (muted copperplate tones) --- */
-  --liujing-taiyang: #b8962e;
-  --liujing-yangming: #b3502e;
-  --liujing-shaoyang: #4d7a5c;
-  --liujing-taiyin: #a08838;
-  --liujing-shaoyin: #3a5068;
-  --liujing-jueyin: #5c305c;
+  /* --- 六经辨证色 (softer, Ippodo-appropriate) --- */
+  --liujing-taiyang: #c4a24a;
+  --liujing-yangming: #c46a4a;
+  --liujing-shaoyang: #5a8a6c;
+  --liujing-taiyin: #b09a4a;
+  --liujing-shaoyin: #4a6a82;
+  --liujing-jueyin: #7a4a7a;
 
   /* --- Layout --- */
   --main-grid-width: 110rem;
   --main-grid-width-reading: 72rem;
-  --side-nav-width: 23rem;
+  --side-nav-width: 20rem;
   --grid-gap: 5rem;
   --grid-outer: 1.5rem;
-  --section-radius: 0rem;
-  --card-radius: 0rem;
+  --section-radius: 0.25rem;
+  --card-radius: 0.25rem;
   --pill-radius: 999px;
 
-  /* --- Borders: Engraving Lines --- */
-  --border-copper: rgba(160, 112, 48, 0.50);
-  --border-copper-thick: rgba(160, 112, 48, 0.70);
-  --border-sepia: rgba(92, 74, 58, 0.25);
-  --border-sepia-thick: rgba(92, 74, 58, 0.40);
-  --border-subtle: rgba(92, 74, 58, 0.10);
-  --divider-rule: rgba(92, 74, 58, 0.18);
+  /* --- Borders: Nearly Invisible --- */
+  --border-copper: rgba(0, 0, 0, 0.08);
+  --border-copper-thick: rgba(0, 0, 0, 0.12);
+  --border-sepia: rgba(0, 0, 0, 0.06);
+  --border-sepia-thick: rgba(0, 0, 0, 0.10);
+  --border-subtle: rgba(0, 0, 0, 0.04);
+  --divider-rule: rgba(0, 0, 0, 0.06);
 
-  /* --- Shadows (warm sepia, not grey) --- */
-  --shadow-card: 0 2px 8px rgba(42, 26, 14, 0.08);
-  --shadow-thumbnail: 0 3px 12px rgba(42, 26, 14, 0.10);
-  --shadow-elevated: 0 8px 28px rgba(42, 26, 14, 0.12);
-  --shadow-inset: inset 0 1px 3px rgba(42, 26, 14, 0.06);
+  /* --- Shadows (barely there) --- */
+  --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.04);
+  --shadow-thumbnail: 0 2px 8px rgba(0, 0, 0, 0.06);
+  --shadow-elevated: 0 4px 16px rgba(0, 0, 0, 0.08);
+  --shadow-inset: inset 0 1px 2px rgba(0, 0, 0, 0.03);
 
-  /* --- Typography --- */
-  --base-line-height: 1.8;
-  --base-letter-spacing: 0.02rem;
-  --heading-letter-spacing: 0.08rem;
+  /* --- Typography: Ippodo values --- */
+  --base-line-height: 1.75;
+  --base-letter-spacing: 0.01em;
+  --heading-letter-spacing: 0.04em;
 
   /* --- Transitions --- */
   --transition-fast: 150ms ease;
@@ -110,7 +110,7 @@
 
   --color-copper: var(--color-copper);
   --color-copper-light: var(--color-copper-light);
-  --color-copper-foutton-faint: var(--color-copper-faint);
+  --color-copper-faint: var(--color-copper-faint);
   --color-sepia: var(--color-sepia);
   --color-sepia-light: var(--color-sepia-light);
   --color-vellum: var(--color-vellum);
@@ -130,7 +130,7 @@
 
   /* --- Font Family --- */
   --font-serif: "Noto Serif SC", "Source Han Serif SC", Georgia, serif;
-  --font-sans: "Noto Serif SC", "Source Han Serif SC", Georgia, serif;
+  --font-sans: "Noto Sans SC", "Source Han Sans SC", -apple-system, sans-serif;
   --font-mono: "JetBrains Mono", "Fira Code", monospace;
 
   /* --- Border Radius --- */
@@ -140,19 +140,12 @@
 }
 
 /* ============================================
-   Base Styles — Vellum Paper with Visible Grain
+   Base Styles — Pure White, No Texture
    ============================================ */
 body {
   background-color: var(--bg-base);
-  background-image:
-    /* Subtle fiber/grain noise */
-    url("data:image/svg+xml,%3Csvg width='200' height='200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E"),
-    /* Warm light spots */
-    radial-gradient(ellipse at 25% 15%, rgba(160, 112, 48, 0.06) 0%, transparent 55%),
-    radial-gradient(ellipse at 75% 85%, rgba(92, 74, 58, 0.04) 0%, transparent 55%),
-    radial-gradient(ellipse at 50% 50%, rgba(160, 112, 48, 0.03) 0%, transparent 70%);
   color: var(--fg-primary);
-  font-family: var(--font-serif);
+  font-family: var(--font-sans);
   line-height: var(--base-line-height);
   letter-spacing: var(--base-letter-spacing);
   -webkit-font-smoothing: antialiased;
@@ -160,7 +153,7 @@ body {
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-serif);
+  font-family: var(--font-sans);
   font-weight: 400;
   color: var(--accent-ink);
   letter-spacing: var(--heading-letter-spacing);
@@ -172,158 +165,34 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 ::-webkit-scrollbar {
-  width: 6px;
+  width: 4px;
 }
 ::-webkit-scrollbar-track {
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(92, 74, 58, 0.25);
-  border-radius: 0px;
+  background: rgba(0, 0, 0, 0.12);
+  border-radius: 2px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(92, 74, 58, 0.40);
+  background: rgba(0, 0, 0, 0.20);
 }
 
 /* ============================================
-   Decorative System — Copperplate Engravings
+   Utility Classes — Minimal, Functional
    ============================================ */
 
-/* --- Section Title: Thick Copper Rule --- */
+/* --- Section Title: thin top rule --- */
 .section-title {
-  border-top: 3px solid var(--color-copper);
-  padding-top: 0.75rem;
+  border-top: 1px solid var(--border-copper-thick);
+  padding-top: 0.5rem;
 }
 
-/* --- Ornamental Rule: ═══◆═══ --- */
-.ornamental-rule {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  color: var(--color-copper);
-  opacity: 0.7;
-  font-size: 0.8rem;
-}
-.ornamental-rule::before,
-.ornamental-rule::after {
-  content: "";
-  flex: 1;
-  height: 1.5px;
-  background: linear-gradient(
-    to right,
-    transparent,
-    var(--border-copper) 15%,
-    var(--border-copper) 85%,
-    transparent
-  );
-}
-
-/* --- Double Rule (plate frame) — PROMINENT --- */
-.plate-frame {
-  position: relative;
-  border: 1.5px solid var(--border-copper);
-  outline: 1px solid var(--border-copper);
-  outline-offset: 4px;
-  background: var(--bg-card);
-  box-shadow: var(--shadow-inset);
-}
-
-/* --- Page Border — book page margin effect --- */
-.page-border {
-  position: relative;
-  border: 1px solid var(--border-sepia);
-  box-shadow: var(--shadow-card);
-  background: var(--bg-card);
-}
-.page-border::before {
-  content: "";
-  position: absolute;
-  inset: 6px;
-  border: 1px solid var(--border-sepia-light);
-  pointer-events: none;
-}
-
-/* --- Copper Corner Ornaments --- */
-.copper-corners {
-  position: relative;
-}
-.copper-corners::before,
-.copper-corners::after {
-  content: "❧";
-  position: absolute;
-  color: var(--color-copper);
-  opacity: 0.35;
-  font-size: 1rem;
-  line-height: 1;
-}
-.copper-corners::before {
-  top: -2px;
-  left: -2px;
-}
-.copper-corners::after {
-  bottom: -2px;
-  right: -2px;
-  transform: rotate(180deg);
-}
-
-/* --- Engraving Label: small caps style --- */
+/* --- Small Label (replaces engraving-label) --- */
 .engraving-label {
-  font-family: var(--font-serif);
-  font-size: 0.7rem;
-  letter-spacing: 0.18em;
-  color: var(--color-copper);
+  font-family: var(--font-sans);
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  color: var(--fg-muted);
   text-transform: uppercase;
-}
-
-/* --- Drop Cap (decorative first character) --- */
-.drop-cap::first-letter {
-  float: left;
-  font-size: 3.2em;
-  line-height: 0.8;
-  padding-right: 0.1em;
-  color: var(--color-copper);
-  font-weight: 400;
-}
-
-/* --- Book Spine Line (vertical edge) --- */
-.book-spine {
-  position: relative;
-}
-.book-spine::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  right: 0;
-  width: 3px;
-  background: linear-gradient(
-    to bottom,
-    var(--color-copper) 0%,
-    var(--border-copper) 50%,
-    var(--color-copper) 100%
-  );
-  opacity: 0.6;
-}
-
-/* --- Leather Texture Background --- */
-.leather-bg {
-  background-color: var(--color-leather);
-  background-image:
-    url("data:image/svg+xml,%3Csvg width='100' height='100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.5' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23n)' opacity='0.06'/%3E%3C/svg%3E"),
-    linear-gradient(135deg, rgba(92, 61, 42, 0.15) 0%, transparent 50%, rgba(92, 61, 42, 0.10) 100%);
-}
-
-/* --- Fleuron / Decorative Divider Variants --- */
-.fleuron-diamond { text-align: center; color: var(--color-copper); opacity: 0.6; font-size: 1.2rem; letter-spacing: 0.5em; }
-.fleuron-rule { display: flex; align-items: center; gap: 1rem; color: var(--color-copper); opacity: 0.5; }
-.fleuron-rule::before, .fleuron-rule::after { content: ""; flex: 1; height: 1px; background: var(--border-copper); }
-
-/* --- Ink Wash (subtle tinted background) --- */
-.ink-wash {
-  background: linear-gradient(
-    135deg,
-    var(--bg-surface) 0%,
-    transparent 40%,
-    var(--bg-surface) 100%
-  );
 }

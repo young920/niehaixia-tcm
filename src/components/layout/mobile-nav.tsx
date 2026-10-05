@@ -12,26 +12,23 @@ const NAV_ITEMS = [
 ] as const;
 
 /**
- * 铜版药典 MobileNav — 书签式底部导航
- * 皮革色底 + 铜色顶线 + 铜色活跃标识
+ * 一保堂式 MobileNav — 白底、轻盈文字
  */
 export function MobileNav() {
   const pathname = usePathname();
 
   return (
-    <nav className="lg:hidden fixed bottom-0 left-0 right-0 z-50 bg-[#3c2a1a] border-t border-copper/30">
-      <div className="flex justify-around items-center h-14">
+    <nav className="lg:hidden fixed bottom-0 left-0 right-0 z-50 bg-bg-base border-t border-[var(--border-copper)]">
+      <div className="flex justify-around items-center h-12">
         {NAV_ITEMS.map((item) => {
           const isActive = pathname === item.href;
           return (
             <Link
               key={item.href}
               href={item.href}
-              className="flex flex-col items-center gap-0.5 text-xs font-serif transition-colors duration-[var(--transition-fast)]"
+              className="flex flex-col items-center gap-0.5 text-xs font-sans transition-colors duration-[var(--transition-fast)]"
               style={{
-                color: isActive ? "var(--color-copper)" : "#8a7a68",
-                borderTop: isActive ? "2px solid var(--color-copper)" : "2px solid transparent",
-                paddingTop: "2px",
+                color: isActive ? "var(--fg-primary)" : "var(--fg-muted)",
               }}
             >
               <span>{item.label}</span>
