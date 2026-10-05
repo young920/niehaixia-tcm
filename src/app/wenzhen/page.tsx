@@ -5,6 +5,7 @@ import { Sidebar } from "@/components/layout/sidebar";
 import { MobileNav } from "@/components/layout/mobile-nav";
 import { Header } from "@/components/layout/header";
 import { Tag } from "@/components/ui/tag";
+import { Markdown } from "@/components/ui/markdown";
 
 interface Message {
   id: string;
@@ -155,9 +156,13 @@ export default function WenzhenPage() {
                     backgroundColor: msg.role === "user" ? "var(--bg-surface)" : "transparent",
                   }}
                 >
-                  <p className="text-sm text-fg-primary leading-relaxed whitespace-pre-wrap font-sans">
-                    {msg.content}
-                  </p>
+                  {msg.role === "user" ? (
+                    <p className="text-sm text-fg-primary leading-relaxed whitespace-pre-wrap font-sans">
+                      {msg.content}
+                    </p>
+                  ) : (
+                    <Markdown content={msg.content} />
+                  )}
                 </div>
                 {msg.liujing && (
                   <div className="mt-2 pl-4">

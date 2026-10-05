@@ -6,6 +6,7 @@ import { MobileNav } from "@/components/layout/mobile-nav";
 import { Header } from "@/components/layout/header";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Markdown } from "@/components/ui/markdown";
 
 type LiujingKey = "taiyang" | "yangming" | "shaoyang" | "taiyin" | "shaoyin" | "jueyin";
 
@@ -204,7 +205,7 @@ export default function FangjiPage() {
 
           {result && !loading && (
             <div className="border-l-2 pl-5 py-6" style={{ borderLeftColor: "var(--accent-primary)" }}>
-              <div className="text-fg-primary text-sm leading-relaxed whitespace-pre-wrap font-sans">{result}</div>
+              <Markdown content={result} />
               <div className="mt-6 pt-4 border-t border-[var(--border-copper)]">
                 <Button variant="ghost" onClick={() => { setResult(null); setQuery(""); }}>← 返回经方目录</Button>
               </div>
