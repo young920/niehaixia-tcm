@@ -1,0 +1,85 @@
+{
+  "version": 1,
+  "created_at": "2026-10-04T14:03:38.671335Z",
+  "updated_at": "2026-10-05T01:19:15.584204Z",
+  "sessions": [
+    {
+      "session_id": "unknown",
+      "date": "2026-10-04",
+      "started_at": "2026-10-04T14:03:38.671335Z",
+      "current_task": "{\"type\":\"ai-title\",\"aiTitle\":\"基于GitHub项目vibecoding产品开发\",\"sessionId\":\"6ae59cac-6b29-4bc6-bedd-b1e59b7",
+      "completed_tasks": [
+        {
+          "description": "completed\"}},\"sourceToolAssistantUUID\":\"71e3ac8c-942f-44a2-bbba-dc0f71c8c128\",\"s",
+          "completed_at": "2026-10-04T14:03:38.671335Z"
+        }
+      ],
+      "remaining_tasks": [
+        {
+          "description": "pending",
+          "status": "pending"
+        }
+      ],
+      "note": "auto-save from Stop hook, 400 transcript lines"
+    },
+    {
+      "session_id": "unknown",
+      "date": "2026-10-04",
+      "started_at": "2026-10-04T14:15:21.819600Z",
+      "current_task": "{\"type\":\"ai-title\",\"aiTitle\":\"基于GitHub项目vibecoding产品开发\",\"sessionId\":\"6ae59cac-6b29-4bc6-bedd-b1e59b7",
+      "completed_tasks": [
+        {
+          "description": "completed\"}},\"sourceToolAssistantUUID\":\"71e3ac8c-942f-44a2-bbba-dc0f71c8c128\",\"s",
+          "completed_at": "2026-10-04T14:15:21.819600Z"
+        }
+      ],
+      "remaining_tasks": [
+        {
+          "description": "remaining",
+          "status": "pending"
+        }
+      ],
+      "note": "auto-save from Stop hook, 400 transcript lines"
+    },
+    {
+      "session_id": "unknown",
+      "date": "2026-10-05",
+      "started_at": "2026-10-05T01:13:35.163517Z",
+      "current_task": "{\"type\":\"ai-title\",\"aiTitle\":\"基于GitHub项目vibecoding产品开发\",\"sessionId\":\"6ae59cac-6b29-4bc6-bedd-b1e59b7",
+      "completed_tasks": [
+        {
+          "description": "completed with no output)\",\"is_error\":false}]},\"uuid\":\"418022a6-6692-4177-be28-d",
+          "completed_at": "2026-10-05T01:13:35.163517Z"
+        }
+      ],
+      "remaining_tasks": [
+        {
+          "description": "remaining",
+          "status": "pending"
+        }
+      ],
+      "note": "auto-save from Stop hook, 400 transcript lines"
+    },
+    {
+      "session_id": "unknown",
+      "date": "2026-10-05",
+      "started_at": "2026-10-05T01:19:15.584204Z",
+      "current_task": "{\"type\":\"ai-title\",\"aiTitle\":\"基于GitHub项目vibecoding产品开发\",\"sessionId\":\"6ae59cac-6b29-4bc6-bedd-b1e59b7",
+      "completed_tasks": [
+        {
+          "description": "completed\\\"},\\\"tool_response\\\":{\\\"success\\\":true,\\\"taskId\\\":\\\"4\\\",\\\"updatedField",
+          "completed_at": "2026-10-05T01:19:15.584204Z"
+        }
+      ],
+      "remaining_tasks": [
+        {
+          "description": "remaining",
+          "status": "pending"
+        }
+      ],
+      "note": "auto-save from Stop hook, 400 transcript lines"
+    }
+  ],
+  "project": "app",
+  "project_dir": "D:\\claude project\\中医问诊\\app"
+}

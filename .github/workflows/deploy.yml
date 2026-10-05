@@ -1,0 +1,83 @@
+name: Deploy to Cloudflare Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - run: npm install
+
+      - name: Ensure Pages project exists
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          PROJECT="niehaixia-tcm"
+          GET=$(curl -s -o /dev/null -w "%{http_code}" \
+            -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+            "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/pages/projects/$PROJECT")
+          if [ "$GET" = "404" ]; then
+            curl -s -X POST \
+              -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+              -H "Content-Type: application/json" \
+              -d "{\"name\":\"$PROJECT\",\"production_branch\":\"main\"}" \
+              "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/pages/projects"
+          fi
+
+      - run: npx @cloudflare/next-on-pages
+
+      - name: Deploy
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          AI_API_KEY: ${{ secrets.AI_API_KEY }}
+          AI_API_BASE: ${{ secrets.AI_API_BASE }}
+          AI_MODEL: ${{ secrets.AI_MODEL }}
+        run: |
+          PROJECT="niehaixia-tcm"
+          # Inject secrets via wrangler pages secret put
+          echo "$AI_API_KEY" | npx wrangler pages secret put AI_API_KEY --project-name="$PROJECT" 2>/dev/null || true
+          if [ -n "$AI_API_BASE" ]; then
+            echo "$AI_API_BASE" | npx wrangler pages secret put AI_API_BASE --project-name="$PROJECT" 2>/dev/null || true
+          fi
+          if [ -n "$AI_MODEL" ]; then
+            echo "$AI_MODEL" | npx wrangler pages secret put AI_MODEL --project-name="$PROJECT" 2>/dev/null || true
+          fi
+          # Deploy
+          npx wrangler pages deploy .vercel/output/static \
+            --project-name="$PROJECT" \
+            --branch=main \
+            --commit-dirty=true
+
+      - name: Inject env vars for Edge runtime
+        if: success()
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          PROJECT="niehaixia-tcm"
+          # wrangler pages secret put does NOT inject env_var by default
+          # Must PATCH deployment_configs to make vars available in Edge
+          curl -s -X PATCH \
+            -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+            -H "Content-Type: application/json" \
+            -d '{
+              "production": {
+                "env_vars": {
+                  "AI_API_KEY": { "value": "'"${{ secrets.AI_API_KEY }}"'" },
+                  "AI_API_BASE": { "value": "'"${{ secrets.AI_API_BASE }}"'" },
+                  "AI_MODEL": { "value": "'"${{ secrets.AI_API_MODEL }}"'" }
+                }
+              }
+            }' \
+            "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/pages/projects/$PROJECT/deployment_configs" > /dev/null
