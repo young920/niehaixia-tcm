@@ -7,20 +7,57 @@ import { Header } from "@/components/layout/header";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
-const CATEGORIES = [
-  { label: "癌症", query: "癌症相关医案", liujing: "jueyin" as const },
-  { label: "心血管", query: "心血管疾病医案", liujing: "shaoyin" as const },
-  { label: "代谢病", query: "代谢病（糖尿病/肥胖）医案", liujing: "taiyin" as const },
-  { label: "消化系统", query: "消化系统疾病医案", liujing: "yangming" as const },
-  { label: "呼吸系统", query: "呼吸系统疾病医案", liujing: "taiyang" as const },
-  { label: "妇科", query: "妇科疾病医案", liujing: "shaoyang" as const },
-];
+type LiujingKey = "taiyang" | "yangming" | "shaoyang" | "taiyin" | "shaoyin" | "jueyin";
 
-const QUICK_QUERIES = [
-  { label: "乳癌", query: "乳癌医案：倪海厦如何辨证论治乳癌" },
-  { label: "失眠", query: "失眠医案：六经辨证治疗失眠的案例" },
-  { label: "糖尿病", query: "糖尿病医案：倪海厦治疗糖尿病的经方思路" },
-  { label: "感冒发烧", query: "感冒发烧医案：六经辨证治疗外感的案例" },
+interface CaseGroup {
+  name: string;
+  liujing: LiujingKey;
+  desc: string;
+  items: string[];
+}
+
+/** 疾病分类 · 医案全目录 */
+const CASE_GROUPS: CaseGroup[] = [
+  {
+    name: "癌症", liujing: "jueyin", desc: "乳癌·肝癌·肺癌·大肠癌等",
+    items: ["乳癌", "肝癌", "肺癌", "大肠癌", "胃癌", "胰脏癌", "摄护腺癌", "血癌", "淋巴癌", "脑瘤"],
+  },
+  {
+    name: "心血管", liujing: "shaoyin", desc: "心悸·胸痹·高血压等",
+    items: ["心悸", "胸痹心痛", "高血压", "心律不齐", "心脏瓣膜病", "动脉硬化"],
+  },
+  {
+    name: "代谢病", liujing: "taiyin", desc: "糖尿病·肥胖·痛风等",
+    items: ["糖尿病", "肥胖", "痛风", "高血脂", "甲状腺疾病", "水肿"],
+  },
+  {
+    name: "消化系统", liujing: "yangming", desc: "胃痛·便秘·腹泻·黄疸等",
+    items: ["胃痛", "便秘", "腹泻", "黄疸", "胆结石", "肠梗阻", "痔疮", "胃溃疡"],
+  },
+  {
+    name: "呼吸系统", liujing: "taiyang", desc: "感冒·咳嗽·哮喘·肺痿等",
+    items: ["感冒发烧", "咳嗽", "哮喘", "肺痿", "肺痈", "鼻窦炎", "过敏"],
+  },
+  {
+    name: "妇科", liujing: "shaoyang", desc: "月经·不孕·更年期等",
+    items: ["月经不调", "痛经", "不孕", "更年期综合征", "子宫肌瘤", "带下"],
+  },
+  {
+    name: "精神神志", liujing: "shaoyin", desc: "失眠·抑郁·癫痫等",
+    items: ["失眠", "抑郁", "焦虑", "癫痫", "脏躁"],
+  },
+  {
+    name: "风湿骨病", liujing: "taiyang", desc: "历节·痹证·腰痛等",
+    items: ["风湿关节炎", "历节病", "腰痛", "颈椎病", "痛风性关节炎"],
+  },
+  {
+    name: "泌尿系统", liujing: "shaoyin", desc: "水肿·淋证·肾结石等",
+    items: ["水肿", "淋证", "肾结石", "尿频", "遗尿"],
+  },
+  {
+    name: "皮肤科", liujing: "yangming", desc: "湿疹·荨麻疹·痈疽等",
+    items: ["湿疹", "荨麻疹", "痈疽", "疔疮", "带状疱疹"],
+  },
 ];
 
 /**
@@ -83,36 +120,39 @@ export default function YianPage() {
             </button>
           </div>
 
-          {/* Quick queries — 列表式 */}
-          <div className="mb-8 max-w-xl">
-            {QUICK_QUERIES.map((q) => (
-              <button
-                key={q.label}
-                onClick={() => search(q.query)}
-                className="block w-full text-left text-sm text-fg-secondary bg-transparent border-b border-[var(--border-copper)] py-3 px-0 font-sans transition-colors duration-[var(--transition-fast)] hover:text-fg-primary"
-              >
-                {q.label}
-              </button>
-            ))}
-          </div>
-
           {!result && !loading && (
             <section>
-              <h2 className="section-title font-sans text-sm text-fg-primary mb-4">按疾病分类</h2>
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-                {CATEGORIES.map((cat) => (
-                  <button key={cat.label} onClick={() => search(cat.query)} className="text-left">
-                    <Card hover className="h-full">
-                      <div className="flex items-center gap-2 mb-2">
-                        <span
-                          className="inline-block w-2 h-2 rounded-full"
-                          style={{ backgroundColor: `var(--liujing-${cat.liujing})` }}
-                        />
-                        <span className="font-sans text-sm text-fg-primary">{cat.label}</span>
+              <h2 className="section-title font-sans text-sm text-fg-primary mb-6">疾病分类目录</h2>
+              <div className="space-y-8">
+                {CASE_GROUPS.map((group) => (
+                  <div key={group.name}>
+                    <div className="flex items-center gap-2 mb-3">
+                      <span
+                        className="inline-block w-2 h-2 rounded-full"
+                        style={{ backgroundColor: `var(--liujing-${group.liujing})` }}
+                      />
+                      <span className="font-sans text-sm" style={{ color: `var(--liujing-${group.liujing})` }}>
+                        {group.name}
+                      </span>
+                      <span className="text-xs text-fg-muted font-sans">{group.desc}</span>
+                    </div>
+                    <div
+                      className="pl-4 border-l-2"
+                      style={{ borderLeftColor: `color-mix(in srgb, var(--liujing-${group.liujing}) 25%, transparent)` }}
+                    >
+                      <div className="flex flex-wrap gap-x-2 gap-y-0">
+                        {group.items.map((item) => (
+                          <button
+                            key={item}
+                            onClick={() => search(`${item}医案：倪海厦如何辨证论治${item}`)}
+                            className="text-sm text-fg-secondary border-b border-[var(--border-copper)] py-2 px-1 font-sans transition-colors duration-[var(--transition-fast)] hover:text-fg-primary"
+                          >
+                            {item}
+                          </button>
+                        ))}
                       </div>
-                      <p className="text-xs text-fg-muted">{cat.query}</p>
-                    </Card>
-                  </button>
+                    </div>
+                  </div>
                 ))}
               </div>
             </section>

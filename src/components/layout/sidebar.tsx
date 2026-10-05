@@ -19,7 +19,7 @@ export function Sidebar() {
   const pathname = usePathname();
 
   return (
-    <aside className="hidden lg:flex flex-col w-[var(--side-nav-width)] min-h-screen bg-sidebar border-r border-[var(--border-copper)] px-[var(--grid-outer)] py-10">
+    <aside className="hidden lg:flex flex-col w-[var(--side-nav-width)] h-screen sticky top-0 bg-sidebar border-r border-[var(--border-copper)] px-[var(--grid-outer)] py-10 overflow-y-auto">
       <Link href="/" className="mb-10 group">
         <h1 className="font-sans text-lg text-fg-primary tracking-wide group-hover:text-fg-muted transition-colors duration-[var(--transition-fast)]">
           倪海厦

@@ -7,24 +7,102 @@ import { Header } from "@/components/layout/header";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
-const QUICK_QUERIES = [
-  { label: "桂枝汤", query: "桂枝汤的组成、剂量、煎服法和主治" },
-  { label: "麻黄汤", query: "麻黄汤的组成、主治和禁忌" },
-  { label: "小柴胡汤", query: "小柴胡汤的组成、主治及少阳病应用" },
-  { label: "四逆汤", query: "四逆汤的组成、主治和少阴病应用" },
-  { label: "白虎汤", query: "白虎汤的组成、主治和阳明病应用" },
-  { label: "真武汤", query: "真武汤的组成、主治和临床要点" },
-];
+type LiujingKey = "taiyang" | "yangming" | "shaoyang" | "taiyin" | "shaoyin" | "jueyin";
 
-const FEATURED_FORMULAS = [
-  { name: "桂枝汤", liujing: "taiyang", desc: "中风表虚，调和营卫" },
-  { name: "麻黄汤", liujing: "taiyang", desc: "伤寒表实，发汗解表" },
-  { name: "白虎汤", liujing: "yangming", desc: "阳明经热，清气分大热" },
-  { name: "大承气汤", liujing: "yangming", desc: "阳明腑实，峻下热结" },
-  { name: "小柴胡汤", liujing: "shaoyang", desc: "少阳半表半里，和解枢机" },
-  { name: "理中汤", liujing: "taiyin", desc: "太阴脾寒，温中散寒" },
-  { name: "四逆汤", liujing: "shaoyin", desc: "少阴阳虚，回阳救逆" },
-  { name: "乌梅丸", liujing: "jueyin", desc: "厥阴寒热错杂，清上温下" },
+interface FormulaGroup {
+  name: string;
+  key: LiujingKey;
+  formulas: { name: string; desc: string }[];
+}
+
+/** 六经分类 · 经方全目录 */
+const LIUJING_FORMULAS: FormulaGroup[] = [
+  {
+    name: "太阳经", key: "taiyang",
+    formulas: [
+      { name: "桂枝汤", desc: "中风表虚，调和营卫" },
+      { name: "麻黄汤", desc: "伤寒表实，发汗解表" },
+      { name: "葛根汤", desc: "太阳病，项背强" },
+      { name: "大青龙汤", desc: "表实兼里热烦躁" },
+      { name: "小青龙汤", desc: "外寒内饮，咳喘" },
+      { name: "桂枝加葛根汤", desc: "太阳病项背强几几" },
+      { name: "桂枝加厚朴杏子汤", desc: "中风兼喘" },
+      { name: "桂枝加附子汤", desc: "表虚漏汗" },
+      { name: "麻黄附子细辛汤", desc: "少阴兼太阳表证" },
+      { name: "麻黄附子甘草汤", desc: "少阴兼表，微发汗" },
+      { name: "桂枝麻黄各半汤", desc: "表郁轻证" },
+      { name: "桂枝二麻黄一汤", desc: "表郁大汗出" },
+      { name: "五苓散", desc: "蓄水证，化气利水" },
+      { name: "桃核承气汤", desc: "蓄血证，逐瘀泄热" },
+      { name: "抵当汤", desc: "蓄血重证" },
+    ],
+  },
+  {
+    name: "阳明经", key: "yangming",
+    formulas: [
+      { name: "白虎汤", desc: "阳明经热，清气分大热" },
+      { name: "白虎加人参汤", desc: "阳明热盛伤津" },
+      { name: "大承气汤", desc: "阳明腑实，峻下热结" },
+      { name: "小承气汤", desc: "阳明腑实轻证" },
+      { name: "调胃承气汤", desc: "阳明燥热内结" },
+      { name: "麻子仁丸", desc: "脾约便秘" },
+      { name: "栀子豉汤", desc: "虚烦不眠" },
+      { name: "茵陈蒿汤", desc: "湿热发黄" },
+      { name: "猪苓汤", desc: "阳明水热互结" },
+    ],
+  },
+  {
+    name: "少阳经", key: "shaoyang",
+    formulas: [
+      { name: "小柴胡汤", desc: "少阳半表半里，和解枢机" },
+      { name: "大柴胡汤", desc: "少阳兼阳明里实" },
+      { name: "柴胡加芒硝汤", desc: "少阳兼里实微结" },
+      { name: "柴胡桂枝汤", desc: "太阳少阳并病" },
+      { name: "柴胡桂枝干姜汤", desc: "少阳兼水饮内结" },
+      { name: "柴胡加龙骨牡蛎汤", desc: "少阳兼烦惊谵语" },
+      { name: "黄芩汤", desc: "少阳热利" },
+      { name: "黄芩加半夏生姜汤", desc: "少阳热利兼呕" },
+    ],
+  },
+  {
+    name: "太阴经", key: "taiyin",
+    formulas: [
+      { name: "理中汤", desc: "太阴脾寒，温中散寒" },
+      { name: "桂枝加芍药汤", desc: "太阴腹痛" },
+      { name: "桂枝加大黄汤", desc: "太阴腹实痛" },
+      { name: "小建中汤", desc: "中焦虚寒腹痛" },
+      { name: "大建中汤", desc: "中阳衰虚寒痛" },
+      { name: "甘草干姜汤", desc: "肺痿脾寒" },
+      { name: "厚朴生姜半夏甘草人参汤", desc: "脾虚气滞腹胀" },
+    ],
+  },
+  {
+    name: "少阴经", key: "shaoyin",
+    formulas: [
+      { name: "四逆汤", desc: "少阴阳虚，回阳救逆" },
+      { name: "四逆加人参汤", desc: "阳虚津伤" },
+      { name: "通脉四逆汤", desc: "少阴格阳于外" },
+      { name: "白通汤", desc: "少阴阴盛戴阳" },
+      { name: "白通加猪胆汁汤", desc: "阴盛格阳反佐" },
+      { name: "真武汤", desc: "少阴阳虚水泛" },
+      { name: "附子汤", desc: "少阴阳虚身痛" },
+      { name: "黄连阿胶汤", desc: "少阴热化心烦" },
+      { name: "猪肤汤", desc: "少阴下利咽痛" },
+      { name: "桃花汤", desc: "少阴下利脓血" },
+      { name: "麻黄附子细辛汤", desc: "少阴兼表" },
+    ],
+  },
+  {
+    name: "厥阴经", key: "jueyin",
+    formulas: [
+      { name: "乌梅丸", desc: "厥阴寒热错杂，清上温下" },
+      { name: "当归四逆汤", desc: "血虚寒厥" },
+      { name: "当归四逆加吴茱萸生姜汤", desc: "血虚寒厥兼内有久寒" },
+      { name: "吴茱萸汤", desc: "厥阴头痛干呕" },
+      { name: "干姜黄芩黄连人参汤", desc: "寒热错杂之呕" },
+      { name: "白头翁汤", desc: "厥阴热利" },
+    ],
+  },
 ];
 
 /**
@@ -85,36 +163,34 @@ export default function FangjiPage() {
             </button>
           </div>
 
-          {/* Quick queries — 列表式 */}
-          <div className="mb-8 max-w-xl">
-            {QUICK_QUERIES.map((q) => (
-              <button
-                key={q.label}
-                onClick={() => search(q.query)}
-                className="block w-full text-left text-sm text-fg-secondary bg-transparent border-b border-[var(--border-copper)] py-3 px-0 font-sans transition-colors duration-[var(--transition-fast)] hover:text-fg-primary"
-              >
-                {q.label}
-              </button>
-            ))}
-          </div>
-
           {!result && !loading && (
             <section>
-              <h2 className="section-title font-sans text-sm text-fg-primary mb-4">常用经方</h2>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-                {FEATURED_FORMULAS.map((f) => (
-                  <button key={f.name} onClick={() => search(`${f.name}的组成、主治和临床应用`)} className="text-left">
-                    <Card hover className="h-full">
-                      <div className="flex items-center gap-2 mb-2">
-                        <span
-                          className="inline-block w-2 h-2 rounded-full"
-                          style={{ backgroundColor: `var(--liujing-${f.liujing})` }}
-                        />
-                        <span className="font-sans text-sm text-fg-primary">{f.name}</span>
-                      </div>
-                      <p className="text-xs text-fg-muted leading-relaxed">{f.desc}</p>
-                    </Card>
-                  </button>
+              <h2 className="section-title font-sans text-sm text-fg-primary mb-6">六经方剂目录</h2>
+              <div className="space-y-8">
+                {LIUJING_FORMULAS.map((group) => (
+                  <div key={group.key}>
+                    <div className="flex items-center gap-2 mb-3">
+                      <span
+                        className="inline-block w-2 h-2 rounded-full"
+                        style={{ backgroundColor: `var(--liujing-${group.key})` }}
+                      />
+                      <span className="font-sans text-sm" style={{ color: `var(--liujing-${group.key})` }}>
+                        {group.name}
+                      </span>
+                    </div>
+                    <div className="pl-4 border-l-2 space-y-0" style={{ borderLeftColor: `color-mix(in srgb, var(--liujing-${group.key}) 25%, transparent)` }}>
+                      {group.formulas.map((f) => (
+                        <button
+                          key={f.name}
+                          onClick={() => search(`${f.name}的组成、主治和临床应用`)}
+                          className="block w-full text-left border-b border-[var(--border-copper)] py-2.5 px-0 font-sans transition-colors duration-[var(--transition-fast)] hover:bg-bg-surface"
+                        >
+                          <span className="text-sm text-fg-primary">{f.name}</span>
+                          <span className="text-xs text-fg-muted ml-2">{f.desc}</span>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
                 ))}
               </div>
             </section>

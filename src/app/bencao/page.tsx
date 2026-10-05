@@ -7,33 +7,61 @@ import { Header } from "@/components/layout/header";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
-const QUICK_QUERIES = [
-  { label: "桂枝", query: "桂枝的性味、归经、主治和倪师临床用法" },
-  { label: "麻黄", query: "麻黄的性味、归经、主治和炮制要点" },
-  { label: "附子", query: "附子的性味、主治、炮制和用量禁忌" },
-  { label: "黄芩", query: "黄芩的性味、归经和临床应用" },
-  { label: "人参", query: "人参的性味、主治和倪师用法" },
-  { label: "半夏", query: "半夏的性味、主治和炮制要点" },
-];
+interface PinGroup {
+  title: string;
+  liujing: string;
+  desc: string;
+  herbs: { name: string; nature: string }[];
+}
 
-const PIN_COLUMNS = [
+/** 三品分类 · 本草全目录 */
+const PIN_GROUPS: PinGroup[] = [
   {
     title: "上品",
     liujing: "taiyang",
     desc: "养命·无毒·久服",
-    herbs: ["人参", "甘草", "茯苓", "白术", "桂枝", "麻黄", "当归", "地黄", "黄芪"],
+    herbs: [
+      { name: "人参", nature: "甘微寒" }, { name: "甘草", nature: "甘平" },
+      { name: "茯苓", nature: "甘淡平" }, { name: "白术", nature: "苦甘温" },
+      { name: "桂枝", nature: "辛甘温" }, { name: "麻黄", nature: "辛苦温" },
+      { name: "当归", nature: "甘辛温" }, { name: "地黄", nature: "甘寒" },
+      { name: "黄芪", nature: "甘微温" }, { name: "山药", nature: "甘平" },
+      { name: "薏苡仁", nature: "甘淡微寒" }, { name: "麦冬", nature: "甘微寒" },
+      { name: "天冬", nature: "甘苦寒" }, { name: "五味子", nature: "酸温" },
+      { name: "菟丝子", nature: "辛甘平" }, { name: "枸杞", nature: "甘平" },
+      { name: "杜仲", nature: "甘温" }, { name: "牛膝", nature: "苦酸平" },
+      { name: "柏子仁", nature: "甘平" }, { name: "酸枣仁", nature: "酸平" },
+    ],
   },
   {
     title: "中品",
     liujing: "shaoyang",
     desc: "养性·补虚·酌用",
-    herbs: ["黄芩", "黄连", "半夏", "芍药", "厚朴", "枳实", "柴胡", "干姜", "细辛"],
+    herbs: [
+      { name: "黄芩", nature: "苦寒" }, { name: "黄连", nature: "苦寒" },
+      { name: "半夏", nature: "辛温" }, { name: "芍药", nature: "苦酸微寒" },
+      { name: "厚朴", nature: "苦辛温" }, { name: "枳实", nature: "苦辛微寒" },
+      { name: "柴胡", nature: "苦辛微寒" }, { name: "干姜", nature: "辛热" },
+      { name: "细辛", nature: "辛温" }, { name: "知母", nature: "苦寒" },
+      { name: "石膏", nature: "辛甘大寒" }, { name: "栀子", nature: "苦寒" },
+      { name: "泽泻", nature: "甘淡寒" }, { name: "猪苓", nature: "甘淡平" },
+      { name: "防己", nature: "苦辛寒" }, { name: "秦艽", nature: "苦辛平" },
+      { name: "紫菀", nature: "苦辛温" }, { name: "款冬花", nature: "辛温" },
+    ],
   },
   {
     title: "下品",
     liujing: "yangming",
     desc: "治病·攻邪·慎用",
-    herbs: ["大黄", "附子", "甘遂", "大戟", "芒硝", "巴豆", "乌头", "水蛭", "蜈蚣"],
+    herbs: [
+      { name: "大黄", nature: "苦寒" }, { name: "附子", nature: "辛甘大热" },
+      { name: "甘遂", nature: "苦寒有毒" }, { name: "大戟", nature: "苦寒有毒" },
+      { name: "芒硝", nature: "咸寒" }, { name: "巴豆", nature: "辛热大毒" },
+      { name: "乌头", nature: "辛热大毒" }, { name: "水蛭", nature: "咸苦平有毒" },
+      { name: "蜈蚣", nature: "辛温有毒" }, { name: "芫花", nature: "辛苦温有毒" },
+      { name: "商陆", nature: "苦寒有毒" }, { name: "牵牛子", nature: "苦寒有毒" },
+      { name: "葶苈子", nature: "辛苦大寒" }, { name: "射干", nature: "苦寒" },
+    ],
   },
 ];
 
@@ -97,39 +125,34 @@ export default function BencaoPage() {
             </button>
           </div>
 
-          {/* Quick queries — 列表式 */}
-          <div className="mb-8 max-w-xl">
-            {QUICK_QUERIES.map((q) => (
-              <button
-                key={q.label}
-                onClick={() => search(q.query)}
-                className="block w-full text-left text-sm text-fg-secondary bg-transparent border-b border-[var(--border-copper)] py-3 px-0 font-sans transition-colors duration-[var(--transition-fast)] hover:text-fg-primary"
-              >
-                {q.label}
-              </button>
-            ))}
-          </div>
-
           {!result && !loading && (
             <section>
-              <h2 className="section-title font-sans text-sm text-fg-primary mb-4">三品分类</h2>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                {PIN_COLUMNS.map((col) => (
-                  <div key={col.title} className="p-5 bg-bg-surface rounded-[var(--card-radius)]">
-                    <div className="flex items-center gap-3 mb-4 pb-3 border-b border-[var(--border-copper)]">
-                      <span className="font-sans text-sm" style={{ color: `var(--liujing-${col.liujing})` }}>{col.title}</span>
-                      <span className="text-xs text-fg-muted font-sans">{col.desc}</span>
+              <h2 className="section-title font-sans text-sm text-fg-primary mb-6">三品分类</h2>
+              <div className="space-y-8">
+                {PIN_GROUPS.map((group) => (
+                  <div key={group.title}>
+                    <div className="flex items-center gap-3 mb-3">
+                      <span className="font-sans text-sm" style={{ color: `var(--liujing-${group.liujing})` }}>
+                        {group.title}
+                      </span>
+                      <span className="text-xs text-fg-muted font-sans">{group.desc}</span>
                     </div>
-                    <div className="flex flex-wrap gap-x-3 gap-y-1.5">
-                      {col.herbs.map((herb) => (
-                        <button
-                          key={herb}
-                          onClick={() => search(`${herb}的性味、归经、主治和倪师临床用法`)}
-                          className="text-xs font-sans text-fg-secondary border-b border-[var(--border-copper)] px-0.5 py-0.5 transition-[color,border-color] duration-[var(--transition-fast)] hover:text-fg-primary hover:border-fg-primary"
-                        >
-                          {herb}
-                        </button>
-                      ))}
+                    <div
+                      className="pl-4 border-l-2"
+                      style={{ borderLeftColor: `color-mix(in srgb, var(--liujing-${group.liujing}) 25%, transparent)` }}
+                    >
+                      <div className="grid grid-cols-2 md:grid-cols-3 gap-x-4 gap-y-0">
+                        {group.herbs.map((herb) => (
+                          <button
+                            key={herb.name}
+                            onClick={() => search(`${herb.name}的性味、归经、主治和倪师临床用法`)}
+                            className="flex items-center justify-between border-b border-[var(--border-copper)] py-2 px-0 font-sans transition-colors duration-[var(--transition-fast)] hover:bg-bg-surface"
+                          >
+                            <span className="text-sm text-fg-primary">{herb.name}</span>
+                            <span className="text-xs text-fg-muted">{herb.nature}</span>
+                          </button>
+                        ))}
+                      </div>
                     </div>
                   </div>
                 ))}
