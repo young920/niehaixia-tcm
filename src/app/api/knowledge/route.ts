@@ -7,6 +7,9 @@
 
 import { NextRequest, NextResponse } from "next/server";
 
+// Cloudflare Pages Edge Runtime 必需声明
+export const runtime = "edge";
+
 const API_KEY = process.env.AI_API_KEY;
 const API_BASE = process.env.AI_API_BASE ?? "https://api.openai.com/v1";
 const MODEL = process.env.AI_MODEL ?? "gpt-4o";
