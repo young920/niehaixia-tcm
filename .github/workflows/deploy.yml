@@ -16,6 +16,7 @@ jobs:
           node-version: 24
 
       - run: npm install --legacy-peer-deps
+      - run: npm install --legacy-peer-deps @cloudflare/next-on-pages wrangler
 
       - name: Ensure Pages project exists
         env:
@@ -34,7 +35,7 @@ jobs:
               "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/pages/projects"
           fi
 
-      - run: npx @cloudflare/next-on-pages
+      - run: npx next-on-pages
 
       - name: Deploy
         env:
