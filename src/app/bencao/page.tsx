@@ -6,7 +6,6 @@ import { MobileNav } from "@/components/layout/mobile-nav";
 import { Header } from "@/components/layout/header";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Tag } from "@/components/ui/tag";
 
 const QUICK_QUERIES = [
   { label: "桂枝", query: "桂枝的性味、归经、主治和倪师临床用法" },
@@ -20,19 +19,19 @@ const QUICK_QUERIES = [
 const PIN_COLUMNS = [
   {
     title: "上品",
-    tag: "taiyang" as const,
+    liujing: "taiyang",
     desc: "养命·无毒·久服",
     herbs: ["人参", "甘草", "茯苓", "白术", "桂枝", "麻黄", "当归", "地黄", "黄芪"],
   },
   {
     title: "中品",
-    tag: "shaoyang" as const,
+    liujing: "shaoyang",
     desc: "养性·补虚·酌用",
     herbs: ["黄芩", "黄连", "半夏", "芍药", "厚朴", "枳实", "柴胡", "干姜", "细辛"],
   },
   {
     title: "下品",
-    tag: "yangming" as const,
+    liujing: "yangming",
     desc: "治病·攻邪·慎用",
     herbs: ["大黄", "附子", "甘遂", "大戟", "芒硝", "巴豆", "乌头", "水蛭", "蜈蚣"],
   },
@@ -71,25 +70,31 @@ export default function BencaoPage() {
       <div className="flex-1 flex flex-col">
         <Header />
         <main className="flex-1 px-[var(--grid-outer)] py-8 lg:px-16 lg:py-12 max-w-[var(--main-grid-width-reading)]">
-          <h1 className="font-serif text-2xl text-accent-ink mb-2">本草查询</h1>
-          <p className="text-fg-muted text-sm mb-6">
-            神农本草经 345 种，三品分类·五味归经·炮制要点
-          </p>
+          <div className="border-t border-brass pt-4 mb-6">
+            <h1 className="font-serif text-2xl text-accent-ink mb-2">本草查询</h1>
+            <p className="text-ink-light text-sm">
+              神农本草经 345 种
+            </p>
+          </div>
 
           {/* Search */}
-          <div className="flex gap-3 mb-6 max-w-xl">
+          <div className="flex gap-3 mb-6 max-w-xl border-b border-divider-wood pb-4">
             <input
               type="text"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && search(query)}
-              placeholder="输入药名，如：桂枝、附子、黄芩..."
-              className="flex-1 bg-bg-card rounded-[var(--card-radius)] border border-fg-muted/20 px-4 py-2.5 text-sm text-fg-primary placeholder:text-fg-muted focus:outline-none focus:border-accent-primary/50"
+              placeholder="输入药名，如：桂枝、附子…"
+              className="flex-1 bg-transparent border-b border-wood px-1 py-2 text-sm text-fg-primary font-serif placeholder:text-ink-light/50 focus:outline-none focus:border-accent-primary transition-[border-color] duration-[var(--transition-fast)]"
               disabled={loading}
             />
-            <Button variant="primary" onClick={() => search(query)} disabled={loading || !query.trim()}>
+            <button
+              onClick={() => search(query)}
+              disabled={loading || !query.trim()}
+              className="text-sm font-serif text-brass px-4 py-2 border border-wood transition-[background-color,color,border-color] duration-[var(--transition-fast)] hover:bg-accent-primary hover:text-fg-inverse hover:border-accent-primary disabled:opacity-40 disabled:pointer-events-none"
+            >
               查药
-            </Button>
+            </button>
           </div>
 
           {/* Quick Queries */}
@@ -98,60 +103,58 @@ export default function BencaoPage() {
               <button
                 key={q.label}
                 onClick={() => search(q.query)}
-                className="text-xs text-fg-secondary bg-bg-card rounded-[var(--pill-radius)] px-3 py-1.5 shadow-[var(--shadow-card)] transition-shadow hover:shadow-[var(--shadow-thumbnail)]"
+                className="text-xs font-serif text-fg-secondary border-b border-divider-wood px-1 py-1.5 transition-[color,border-color] duration-[var(--transition-fast)] hover:text-accent-primary hover:border-accent-primary/30"
               >
                 {q.label}
               </button>
             ))}
           </div>
 
-          {/* Three Grades */}
+          {/* 三品分类 — 三个药柜大格 */}
           {!result && !loading && (
             <section>
-              <h2 className="font-serif text-base text-accent-ink mb-4">三品分类</h2>
+              <h2 className="section-title font-serif text-base text-accent-ink mb-4">三品分类</h2>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 {PIN_COLUMNS.map((col) => (
-                  <Card key={col.title}>
+                  <div key={col.title} className="border-t-2 bg-bg-card p-5" style={{ borderTopColor: `var(--liujing-${col.liujing})` }}>
                     <div className="flex items-center gap-2 mb-3">
-                      <Tag variant={col.tag}>{col.title}</Tag>
-                      <span className="text-xs text-fg-muted">{col.desc}</span>
+                      <span className="font-serif text-sm" style={{ color: `var(--liujing-${col.liujing})` }}>{col.title}</span>
+                      <span className="text-xs text-ink-light">{col.desc}</span>
                     </div>
-                    <div className="flex flex-wrap gap-1.5">
+                    <div className="flex flex-wrap gap-x-3 gap-y-1">
                       {col.herbs.map((herb) => (
                         <button
                           key={herb}
                           onClick={() => search(`${herb}的性味、归经、主治和倪师临床用法`)}
-                          className="text-xs text-fg-secondary bg-fg-muted/5 rounded-[var(--pill-radius)] px-2.5 py-1 transition-colors hover:bg-fg-muted/15 hover:text-fg-primary"
+                          className="text-xs font-serif text-fg-secondary border-b border-divider-wood px-0.5 py-0.5 transition-[color,border-color] duration-[var(--transition-fast)] hover:text-accent-primary hover:border-accent-primary/30"
                         >
                           {herb}
                         </button>
                       ))}
                     </div>
-                  </Card>
+                  </div>
                 ))}
               </div>
             </section>
           )}
 
-          {/* Loading */}
           {loading && (
-            <Card>
-              <p className="text-sm text-fg-muted">正在检索本草...</p>
-            </Card>
+            <div className="border border-divider-wood bg-bg-card p-6">
+              <p className="text-sm text-ink-light font-serif">正在检索本草…</p>
+            </div>
           )}
 
-          {/* Result */}
           {result && !loading && (
-            <Card>
-              <div className="prose prose-sm max-w-none text-fg-primary leading-relaxed whitespace-pre-wrap">
+            <div className="border border-divider-wood bg-bg-card p-6">
+              <div className="text-fg-primary text-sm leading-relaxed whitespace-pre-wrap font-serif">
                 {result}
               </div>
-              <div className="mt-4 pt-4 border-t border-fg-muted/10">
+              <div className="mt-4 pt-4 border-t border-divider-wood">
                 <Button variant="ghost" onClick={() => { setResult(null); setQuery(""); }}>
                   ← 返回本草目录
                 </Button>
               </div>
-            </Card>
+            </div>
           )}
         </main>
         <MobileNav />

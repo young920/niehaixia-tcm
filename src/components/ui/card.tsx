@@ -1,17 +1,31 @@
 import type { ReactNode } from "react";
 
+type Variant = "default" | "drawer";
+
 interface CardProps {
   children: ReactNode;
   className?: string;
   hover?: boolean;
+  variant?: Variant;
 }
 
-export function Card({ children, className = "", hover = false }: CardProps) {
+const VARIANT_CLASSES: Record<Variant, string> = {
+  default: "bg-bg-card border-t border-wood-light",
+  drawer: "bg-bg-card border-t-2 border-wood",
+};
+
+export function Card({
+  children,
+  className = "",
+  hover = false,
+  variant = "default",
+}: CardProps) {
   return (
     <div
       className={`
-        bg-bg-card rounded-[var(--card-radius)] shadow-[var(--shadow-card)] p-5
-        ${hover ? "transition-shadow duration-[var(--transition-fast)] hover:shadow-[var(--shadow-thumbnail)]" : ""}
+        rounded-[var(--card-radius)] p-5
+        ${VARIANT_CLASSES[variant]}
+        ${hover ? "transition-[border-color] duration-[var(--transition-fast)] hover:border-accent-primary/40" : ""}
         ${className}
       `}
     >

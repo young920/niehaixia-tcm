@@ -6,15 +6,14 @@ import { MobileNav } from "@/components/layout/mobile-nav";
 import { Header } from "@/components/layout/header";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Tag } from "@/components/ui/tag";
 
 const CATEGORIES = [
-  { label: "癌症", query: "癌症相关医案", tag: "jueyin" as const },
-  { label: "心血管", query: "心血管疾病医案", tag: "shaoyin" as const },
-  { label: "代谢病", query: "代谢病（糖尿病/肥胖）医案", tag: "taiyin" as const },
-  { label: "消化系统", query: "消化系统疾病医案", tag: "yangming" as const },
-  { label: "呼吸系统", query: "呼吸系统疾病医案", tag: "taiyang" as const },
-  { label: "妇科", query: "妇科疾病医案", tag: "shaoyang" as const },
+  { label: "癌症", query: "癌症相关医案", liujing: "jueyin" as const },
+  { label: "心血管", query: "心血管疾病医案", liujing: "shaoyin" as const },
+  { label: "代谢病", query: "代谢病（糖尿病/肥胖）医案", liujing: "taiyin" as const },
+  { label: "消化系统", query: "消化系统疾病医案", liujing: "yangming" as const },
+  { label: "呼吸系统", query: "呼吸系统疾病医案", liujing: "taiyang" as const },
+  { label: "妇科", query: "妇科疾病医案", liujing: "shaoyang" as const },
 ];
 
 const QUICK_QUERIES = [
@@ -57,25 +56,31 @@ export default function YianPage() {
       <div className="flex-1 flex flex-col">
         <Header />
         <main className="flex-1 px-[var(--grid-outer)] py-8 lg:px-16 lg:py-12 max-w-[var(--main-grid-width-reading)]">
-          <h1 className="font-serif text-2xl text-accent-ink mb-2">医案检索</h1>
-          <p className="text-fg-muted text-sm mb-6">
-            849 例倪师真实医案，按疾病分类检索
-          </p>
+          <div className="border-t border-brass pt-4 mb-6">
+            <h1 className="font-serif text-2xl text-accent-ink mb-2">医案检索</h1>
+            <p className="text-ink-light text-sm">
+              849 例倪师真实医案
+            </p>
+          </div>
 
           {/* Search */}
-          <div className="flex gap-3 mb-6 max-w-xl">
+          <div className="flex gap-3 mb-6 max-w-xl border-b border-divider-wood pb-4">
             <input
               type="text"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && search(query)}
-              placeholder="输入疾病或症状，如：乳癌、失眠、糖尿病..."
-              className="flex-1 bg-bg-card rounded-[var(--card-radius)] border border-fg-muted/20 px-4 py-2.5 text-sm text-fg-primary placeholder:text-fg-muted focus:outline-none focus:border-accent-primary/50"
+              placeholder="输入疾病或症状，如：乳癌、失眠…"
+              className="flex-1 bg-transparent border-b border-wood px-1 py-2 text-sm text-fg-primary font-serif placeholder:text-ink-light/50 focus:outline-none focus:border-accent-primary transition-[border-color] duration-[var(--transition-fast)]"
               disabled={loading}
             />
-            <Button variant="primary" onClick={() => search(query)} disabled={loading || !query.trim()}>
+            <button
+              onClick={() => search(query)}
+              disabled={loading || !query.trim()}
+              className="text-sm font-serif text-brass px-4 py-2 border border-wood transition-[background-color,color,border-color] duration-[var(--transition-fast)] hover:bg-accent-primary hover:text-fg-inverse hover:border-accent-primary disabled:opacity-40 disabled:pointer-events-none"
+            >
               检索
-            </Button>
+            </button>
           </div>
 
           {/* Quick Queries */}
@@ -84,17 +89,17 @@ export default function YianPage() {
               <button
                 key={q.label}
                 onClick={() => search(q.query)}
-                className="text-xs text-fg-secondary bg-bg-card rounded-[var(--pill-radius)] px-3 py-1.5 shadow-[var(--shadow-card)] transition-shadow hover:shadow-[var(--shadow-thumbnail)]"
+                className="text-xs font-serif text-fg-secondary border-b border-divider-wood px-1 py-1.5 transition-[color,border-color] duration-[var(--transition-fast)] hover:text-accent-primary hover:border-accent-primary/30"
               >
                 {q.label}
               </button>
             ))}
           </div>
 
-          {/* Category Grid */}
+          {/* 卷宗分类 — 医案档案柜 */}
           {!result && !loading && (
             <section>
-              <h2 className="font-serif text-base text-accent-ink mb-4">按疾病分类</h2>
+              <h2 className="section-title font-serif text-base text-accent-ink mb-4">按疾病分类</h2>
               <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
                 {CATEGORIES.map((cat) => (
                   <button
@@ -102,11 +107,15 @@ export default function YianPage() {
                     onClick={() => search(cat.query)}
                     className="text-left"
                   >
-                    <Card hover className="h-full">
+                    <Card hover variant="drawer" className="h-full">
                       <div className="flex items-center gap-2 mb-2">
-                        <Tag variant={cat.tag}>{cat.label}</Tag>
+                        <span
+                          className="inline-block w-1.5 h-1.5 rounded-full"
+                          style={{ backgroundColor: `var(--liujing-${cat.liujing})` }}
+                        />
+                        <span className="font-serif text-sm text-accent-ink">{cat.label}</span>
                       </div>
-                      <p className="text-xs text-fg-muted">{cat.query}</p>
+                      <p className="text-xs text-ink-light">{cat.query}</p>
                     </Card>
                   </button>
                 ))}
@@ -114,25 +123,23 @@ export default function YianPage() {
             </section>
           )}
 
-          {/* Loading */}
           {loading && (
-            <Card>
-              <p className="text-sm text-fg-muted">正在检索医案...</p>
-            </Card>
+            <div className="border border-divider-wood bg-bg-card p-6">
+              <p className="text-sm text-ink-light font-serif">正在检索医案…</p>
+            </div>
           )}
 
-          {/* Result */}
           {result && !loading && (
-            <Card>
-              <div className="prose prose-sm max-w-none text-fg-primary leading-relaxed whitespace-pre-wrap">
+            <div className="border border-divider-wood bg-bg-card p-6">
+              <div className="text-fg-primary text-sm leading-relaxed whitespace-pre-wrap font-serif">
                 {result}
               </div>
-              <div className="mt-4 pt-4 border-t border-fg-muted/10">
+              <div className="mt-4 pt-4 border-t border-divider-wood">
                 <Button variant="ghost" onClick={() => { setResult(null); setQuery(""); }}>
                   ← 返回医案分类
                 </Button>
               </div>
-            </Card>
+            </div>
           )}
         </main>
         <MobileNav />

@@ -3,29 +3,39 @@
 /* ============================================
    倪海厦·经方中医问诊 — Design Tokens
    Base: muuuuu.org Japanese minimalist
-   Adapted: 药石色系 + 经方气质
+   Adapted: 药柜格物 — 纸色·木纹·铜器·墨色
    ============================================ */
 
 :root {
-  /* --- Base --- */
-  --bg-base: #edebe9;
-  --bg-card: rgba(255, 255, 255, 0.85);
-  --bg-card-solid: #ffffff;
-  --bg-surface: rgba(243, 243, 241, 0.4);
+  /* --- Paper Backgrounds --- */
+  --bg-base: #f5f0e8;
+  --bg-card: #faf7f2;
+  --bg-card-solid: #faf7f2;
+  --bg-surface: rgba(139, 94, 60, 0.05);
+  --bg-sidebar: #efe9df;
 
-  /* --- Foreground --- */
-  --fg-primary: #262626;
-  --fg-secondary: #313131;
-  --fg-muted: #6b6b6b;
-  --fg-inverse: #ffffff;
+  /* --- Ink Foreground --- */
+  --fg-primary: #2a2017;
+  --fg-secondary: #4a3f30;
+  --fg-muted: #8a7e6e;
+  --fg-inverse: #faf7f2;
 
   /* --- Accent: 药石色系 --- */
   --accent-primary: #8b5e3c;
-  --accent-secondary: #5c7a6e;
+  --accent-secondary: #7a6b52;
   --accent-warm: #c4854a;
   --accent-cold: #4a6b8a;
   --accent-danger: #8c3a3a;
-  --accent-ink: #2c2c2c;
+  --accent-ink: #2a2017;
+
+  /* --- Material: 木·铜·纸 --- */
+  --color-brass: #b8943e;
+  --color-wood: #8c6d4a;
+  --color-wood-light: rgba(140, 109, 74, 0.15);
+  --color-paper: #f5f0e8;
+  --color-paper-warm: #faf7f2;
+  --color-ink: #2a2017;
+  --color-ink-light: #8a7e6e;
 
   /* --- 六经辨证色 --- */
   --liujing-taiyang: #d4a843;
@@ -42,17 +52,24 @@
   --grid-gap: 5rem;
   --grid-outer: 1.5rem;
   --section-radius: 1rem;
-  --card-radius: 0.625rem;
+  --card-radius: 0.25rem;
   --pill-radius: 999px;
 
-  /* --- Shadows --- */
-  --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.06);
-  --shadow-thumbnail: 0 4px 12px rgba(0, 0, 0, 0.08);
-  --shadow-elevated: 0 8px 24px rgba(0, 0, 0, 0.10);
+  /* --- Borders & Dividers --- */
+  --border-wood: rgba(140, 109, 74, 0.25);
+  --border-brass: rgba(184, 148, 62, 0.3);
+  --border-subtle: rgba(139, 94, 60, 0.1);
+  --divider-wood: rgba(140, 109, 74, 0.12);
+
+  /* --- Shadows (warm ink, not grey) --- */
+  --shadow-card: 0 1px 3px rgba(42, 32, 23, 0.06);
+  --shadow-thumbnail: 0 3px 10px rgba(42, 32, 23, 0.08);
+  --shadow-elevated: 0 8px 24px rgba(42, 32, 23, 0.10);
 
   /* --- Typography --- */
-  --base-line-height: 1.69;
-  --base-letter-spacing: 0.04rem;
+  --base-line-height: 1.75;
+  --base-letter-spacing: 0.02rem;
+  --heading-letter-spacing: 0.06rem;
 
   /* --- Transitions --- */
   --transition-fast: 150ms ease;
@@ -66,6 +83,7 @@
   --color-bg-card: var(--bg-card);
   --color-bg-card-solid: var(--bg-card-solid);
   --color-bg-surface: var(--bg-surface);
+  --color-bg-sidebar: var(--bg-sidebar);
 
   --color-fg-primary: var(--fg-primary);
   --color-fg-secondary: var(--fg-secondary);
@@ -78,6 +96,14 @@
   --color-accent-cold: var(--accent-cold);
   --color-accent-danger: var(--accent-danger);
   --color-accent-ink: var(--accent-ink);
+
+  --color-brass: var(--color-brass);
+  --color-wood: var(--color-wood);
+  --color-wood-light: var(--color-wood-light);
+  --color-paper: var(--color-paper);
+  --color-paper-warm: var(--color-paper-warm);
+  --color-ink: var(--color-ink);
+  --color-ink-light: var(--color-ink-light);
 
   --color-liujing-taiyang: var(--liujing-taiyang);
   --color-liujing-yangming: var(--liujing-yangming);
@@ -97,9 +123,13 @@
   --radius-pill: var(--pill-radius);
 }
 
-/* --- Global Styles --- */
+/* --- Paper Texture Background --- */
 body {
   background-color: var(--bg-base);
+  background-image:
+    radial-gradient(circle at 20% 50%, rgba(139, 94, 60, 0.03) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(139, 94, 60, 0.02) 0%, transparent 50%),
+    radial-gradient(circle at 50% 80%, rgba(184, 148, 62, 0.02) 0%, transparent 50%);
   color: var(--fg-primary);
   font-family: var(--font-sans);
   line-height: var(--base-line-height);
@@ -112,6 +142,7 @@ h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-serif);
   font-weight: 400;
   color: var(--accent-ink);
+  letter-spacing: var(--heading-letter-spacing);
 }
 
 ::selection {
@@ -120,15 +151,21 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 ::-webkit-scrollbar {
-  width: 6px;
+  width: 5px;
 }
 ::-webkit-scrollbar-track {
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(0, 0, 0, 0.15);
-  border-radius: 3px;
+  background: rgba(140, 109, 74, 0.2);
+  border-radius: 2px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(0, 0, 0, 0.25);
+  background: rgba(140, 109, 74, 0.35);
+}
+
+/* --- Section Title: 书页题签 --- */
+.section-title {
+  border-top: 1px solid var(--border-brass);
+  padding-top: 0.75rem;
 }

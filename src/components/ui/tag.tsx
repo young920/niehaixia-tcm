@@ -7,20 +7,20 @@ interface TagProps {
   children: ReactNode;
 }
 
-const COLOR_MAP: Record<string, string> = {
-  taiyang: "bg-liujing-taiyang/15 text-liujing-taiyang",
-  yangming: "bg-liujing-yangming/15 text-liujing-yangming",
-  shaoyang: "bg-liujing-shaoyang/15 text-liujing-shaoyang",
-  taiyin: "bg-liujing-taiyin/15 text-liujing-taiyin",
-  shaoyin: "bg-liujing-shaoyin/15 text-liujing-shaoyin",
-  jueyin: "bg-liujing-jueyin/15 text-liujing-jueyin",
-  default: "bg-fg-muted/10 text-fg-secondary",
-};
-
+/**
+ * 药柜签条风格 — 左侧色条 + 纸色底 + 衬线字
+ * 模拟中药柜抽屉上的标签签条
+ */
 export function Tag({ variant = "default", children }: TagProps) {
+  const barColor =
+    variant === "default"
+      ? "var(--color-wood)"
+      : `var(--liujing-${variant})`;
+
   return (
     <span
-      className={`inline-block rounded-[var(--pill-radius)] px-3 py-1 text-xs font-medium ${COLOR_MAP[variant]}`}
+      className="inline-flex items-center gap-0 bg-paper-warm rounded-none px-2.5 py-0.5 text-xs font-serif"
+      style={{ borderLeft: `3px solid ${barColor}`, color: barColor }}
     >
       {children}
     </span>
