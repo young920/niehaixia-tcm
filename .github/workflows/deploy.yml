@@ -8,6 +8,8 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    env:
+      NPM_CONFIG_LEGACY_PEER_DEPS: "true"
     steps:
       - uses: actions/checkout@v4
 
