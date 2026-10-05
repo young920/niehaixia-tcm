@@ -74,14 +74,14 @@ export default function BencaoPage() {
             <p className="engraving-label">MATERIA MEDICA · 神农本草经 345 种</p>
           </div>
 
-          <div className="flex gap-3 mb-6 max-w-xl border-b border-divider-rule pb-4">
+          <div className="flex gap-3 mb-6 max-w-xl border-b-2 border-copper/20 pb-4">
             <input type="text" value={query} onChange={(e) => setQuery(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && search(query)} placeholder="输入药名，如：桂枝、附子…"
-              className="flex-1 bg-transparent border-b border-sepia px-1 py-2 text-sm text-fg-primary font-serif placeholder:text-fg-muted/50 focus:outline-none focus:border-copper transition-[border-color] duration-[var(--transition-fast)]"
+              className="flex-1 bg-transparent border-b-2 border-sepia px-1 py-2.5 text-sm text-fg-primary font-serif placeholder:text-fg-muted/50 focus:outline-none focus:border-copper transition-[border-color] duration-[var(--transition-fast)]"
               disabled={loading}
             />
             <button onClick={() => search(query)} disabled={loading || !query.trim()}
-              className="text-sm font-serif text-copper px-4 py-2 border border-copper tracking-wider transition-[background-color,color,border-color] duration-[var(--transition-fast)] hover:bg-copper hover:text-fg-inverse hover:border-copper disabled:opacity-40 disabled:pointer-events-none">
+              className="text-sm font-serif text-copper px-5 py-2 border-2 border-copper tracking-wider transition-[background-color,color,border-color] duration-[var(--transition-fast)] hover:bg-copper hover:text-fg-inverse hover:border-copper disabled:opacity-40 disabled:pointer-events-none">
               查药
             </button>
           </div>
@@ -89,7 +89,7 @@ export default function BencaoPage() {
           <div className="flex flex-wrap gap-3 mb-8">
             {QUICK_QUERIES.map((q) => (
               <button key={q.label} onClick={() => search(q.query)}
-                className="text-xs font-serif text-fg-secondary border border-sepia bg-vellum-warm px-3 py-1 transition-[color,border-color,background-color] duration-[var(--transition-fast)] hover:text-accent-primary hover:border-copper hover:bg-surface">
+                className="text-xs font-serif text-fg-secondary border border-sepia bg-vellum-warm px-3 py-1.5 transition-[color,border-color,background-color] duration-[var(--transition-fast)] hover:text-accent-primary hover:border-copper hover:bg-surface">
                 {q.label}
               </button>
             ))}
@@ -98,17 +98,17 @@ export default function BencaoPage() {
           {!result && !loading && (
             <section>
               <h2 className="section-title font-serif text-base text-accent-ink mb-4">三品分类</h2>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
                 {PIN_COLUMNS.map((col) => (
-                  <div key={col.title} className="plate-frame p-5">
-                    <div className="flex items-center gap-2 mb-3 border-b border-divider-rule pb-2">
-                      <span className="font-serif text-sm" style={{ color: `var(--liujing-${col.liujing})` }}>{col.title}</span>
+                  <div key={col.title} className="plate-frame p-6">
+                    <div className="flex items-center gap-3 mb-4 border-b-2 border-copper/20 pb-3">
+                      <span className="font-serif text-lg" style={{ color: `var(--liujing-${col.liujing})` }}>{col.title}</span>
                       <span className="engraving-label">{col.desc}</span>
                     </div>
-                    <div className="flex flex-wrap gap-x-3 gap-y-1.5">
+                    <div className="flex flex-wrap gap-x-3 gap-y-2">
                       {col.herbs.map((herb) => (
                         <button key={herb} onClick={() => search(`${herb}的性味、归经、主治和倪师临床用法`)}
-                          className="text-xs font-serif text-fg-secondary border-b border-sepia px-0.5 py-0.5 transition-[color,border-color] duration-[var(--transition-fast)] hover:text-accent-primary hover:border-copper/30">
+                          className="text-xs font-serif text-fg-secondary border-b border-sepia px-0.5 py-0.5 transition-[color,border-color] duration-[var(--transition-fast)] hover:text-accent-primary hover:border-copper">
                           {herb}
                         </button>
                       ))}
@@ -119,12 +119,12 @@ export default function BencaoPage() {
             </section>
           )}
 
-          {loading && <div className="plate-frame p-6"><p className="text-sm text-fg-muted font-serif">正在检索本草…</p></div>}
+          {loading && <div className="plate-frame p-8"><p className="text-sm text-fg-muted font-serif">正在检索本草…</p></div>}
 
           {result && !loading && (
-            <div className="plate-frame p-6">
+            <div className="plate-frame p-8 copper-corners">
               <div className="text-fg-primary text-sm leading-relaxed whitespace-pre-wrap font-serif">{result}</div>
-              <div className="mt-4 pt-4 border-t border-divider-rule">
+              <div className="mt-6 pt-4 border-t border-divider-rule">
                 <Button variant="ghost" onClick={() => { setResult(null); setQuery(""); }}>← 返回本草目录</Button>
               </div>
             </div>

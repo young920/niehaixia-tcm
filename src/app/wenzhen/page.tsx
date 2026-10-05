@@ -107,32 +107,32 @@ export default function WenzhenPage() {
                   <p className="engraving-label mt-2">CONSULTATIO · EXAMINATIO · DIAGNOSIS</p>
                 </div>
 
-                <div className="plate-frame p-6 mb-8">
-                  <div className="space-y-4">
-                    <div className="border-b border-divider-rule pb-3">
+                <div className="plate-frame p-8 mb-8 copper-corners">
+                  <div className="space-y-5">
+                    <div className="border-b-2 border-copper/20 pb-4">
                       <span className="engraving-label">CHIEF COMPLAINT · 主诉</span>
                       <p className="text-fg-muted text-sm font-serif mt-1">请描述您的主要症状与不适</p>
                     </div>
-                    <div className="grid grid-cols-3 gap-4">
+                    <div className="grid grid-cols-3 gap-5">
                       {[
                         { label: "寒热", sub: "CHILL & FEVER" },
                         { label: "汗出", sub: "SWEATING" },
                         { label: "头身", sub: "HEAD & BODY" },
                       ].map((field) => (
                         <div key={field.label} className="border-b border-divider-rule pb-2">
-                          <span className="font-serif text-sm text-copper">{field.label}</span>
+                          <span className="font-serif text-base text-copper">{field.label}</span>
                           <p className="engraving-label mt-0.5">{field.sub}</p>
                         </div>
                       ))}
                     </div>
-                    <div className="grid grid-cols-3 gap-4">
+                    <div className="grid grid-cols-3 gap-5">
                       {[
                         { label: "二便", sub: "EXCRETION" },
                         { label: "饮食", sub: "APPETITE" },
                         { label: "睡眠", sub: "SLEEP" },
                       ].map((field) => (
                         <div key={field.label} className="border-b border-divider-rule pb-2">
-                          <span className="font-serif text-sm text-copper">{field.label}</span>
+                          <span className="font-serif text-base text-copper">{field.label}</span>
                           <p className="engraving-label mt-0.5">{field.sub}</p>
                         </div>
                       ))}
@@ -141,12 +141,12 @@ export default function WenzhenPage() {
                 </div>
 
                 <div className="space-y-2">
-                  <p className="engraving-label mb-2">COMMON SYMPTOMS · 常见症状</p>
+                  <p className="engraving-label mb-3">COMMON SYMPTOMS · 常见症状</p>
                   {PRESET_SYMPTOMS.map((symptom) => (
                     <button
                       key={symptom}
                       onClick={() => sendMessage(symptom)}
-                      className="block w-full text-left text-sm text-fg-secondary bg-transparent border-b border-divider-rule py-2.5 px-1 font-serif transition-[color,border-color] duration-[var(--transition-fast)] hover:text-accent-primary hover:border-copper/30"
+                      className="block w-full text-left text-sm text-fg-secondary bg-transparent border-b border-sepia py-3 px-1 font-serif transition-[color,border-color] duration-[var(--transition-fast)] hover:text-accent-primary hover:border-copper"
                     >
                       {symptom}
                     </button>
@@ -158,10 +158,9 @@ export default function WenzhenPage() {
             {messages.map((msg, i) => (
               <div key={msg.id} className="max-w-2xl mx-auto mb-6">
                 <div
-                  className="border-l-2 pl-4 py-4"
+                  className="border-l-[3px] pl-5 py-4"
                   style={{
                     borderLeftColor: msg.role === "user" ? "var(--color-copper)" : "var(--accent-primary)",
-                    borderLeftWidth: "3px",
                     backgroundColor: msg.role === "user" ? "var(--bg-surface)" : "transparent",
                   }}
                 >
@@ -173,7 +172,7 @@ export default function WenzhenPage() {
                   </p>
                 </div>
                 {msg.liujing && (
-                  <div className="mt-2 pl-4">
+                  <div className="mt-2 pl-5">
                     <Tag variant={msg.liujing as "taiyang" | "yangming" | "shaoyang" | "taiyin" | "shaoyin" | "jueyin"}>
                       {LIUJING_LABELS[msg.liujing] ?? msg.liujing}经
                     </Tag>
@@ -185,10 +184,9 @@ export default function WenzhenPage() {
             {loading && (
               <div className="max-w-2xl mx-auto mb-6">
                 <div
-                  className="border-l-2 pl-4 py-4"
+                  className="border-l-[3px] pl-5 py-4"
                   style={{
                     borderLeftColor: "var(--accent-primary)",
-                    borderLeftWidth: "3px",
                   }}
                 >
                   <span className="engraving-label mb-2 block">DIAGNOSIS · 辨</span>
@@ -198,7 +196,7 @@ export default function WenzhenPage() {
             )}
           </div>
 
-          <div className="border-t border-divider-rule bg-bg-base px-[var(--grid-outer)] py-4 lg:px-16">
+          <div className="leather-bg border-t border-copper/30 px-[var(--grid-outer)] py-4 lg:px-16">
             <div className="flex gap-3 max-w-2xl mx-auto">
               <input
                 type="text"
@@ -206,13 +204,13 @@ export default function WenzhenPage() {
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={(e) => e.key === "Enter" && sendMessage(input)}
                 placeholder="描述症状…"
-                className="flex-1 bg-transparent border-b border-sepia px-2 py-2.5 text-sm text-fg-primary font-serif placeholder:text-fg-muted/50 focus:outline-none focus:border-copper transition-[border-color] duration-[var(--transition-fast)]"
+                className="flex-1 bg-transparent border-b border-[#8a7a68] px-2 py-2.5 text-sm text-[#d4c4a8] font-serif placeholder:text-[#7a6a58] focus:outline-none focus:border-[var(--color-copper)] transition-[border-color] duration-[var(--transition-fast)]"
                 disabled={loading}
               />
               <button
                 onClick={() => sendMessage(input)}
                 disabled={loading || !input.trim()}
-                className="text-sm font-serif text-copper px-4 py-2 border border-copper tracking-wider transition-[background-color,color,border-color] duration-[var(--transition-fast)] hover:bg-copper hover:text-fg-inverse hover:border-copper disabled:opacity-40 disabled:pointer-events-none"
+                className="text-sm font-serif text-[var(--color-copper)] px-4 py-2 border border-[var(--color-copper)] tracking-wider transition-[background-color,color,border-color] duration-[var(--transition-fast)] hover:bg-[var(--color-copper)] hover:text-[var(--fg-inverse)] disabled:opacity-40 disabled:pointer-events-none"
               >
                 问诊
               </button>

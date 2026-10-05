@@ -77,17 +77,21 @@ export default function LiujingPage() {
             <p className="engraving-label">SIX-CHANNEL DIFFERENTIATION · 六经传变</p>
           </div>
 
+          {/* 传变路径 — 铜版经络图 */}
           <section className="mb-10">
             <h2 className="section-title font-serif text-base text-accent-ink mb-6">传变路径</h2>
-            <div className="relative pl-8">
-              <div className="absolute left-3 top-0 bottom-0 w-px bg-copper/20" />
+            <div className="relative pl-10">
+              {/* Central spine line */}
+              <div className="absolute left-4 top-0 bottom-0 w-[3px]" style={{ background: "linear-gradient(to bottom, var(--color-copper), var(--border-copper), var(--color-copper))" }} />
               {STAGES.map((stage) => (
-                <div key={stage.key} className="relative mb-4 last:mb-0">
+                <div key={stage.key} className="relative mb-5 last:mb-0">
+                  {/* Diamond node */}
                   <div
-                    className="absolute -left-5 top-3 w-3 h-3 rotate-45 border-2 transition-[background-color] duration-[var(--transition-fast)]"
+                    className="absolute -left-7 top-3.5 w-4 h-4 rotate-45 border-2 transition-all duration-[var(--transition-fast)]"
                     style={{
                       borderColor: stage.color,
                       backgroundColor: activeStage === stage.key ? stage.color : "var(--bg-base)",
+                      boxShadow: activeStage === stage.key ? `0 0 6px ${stage.color}` : "none",
                     }}
                   />
                   <button
@@ -95,11 +99,14 @@ export default function LiujingPage() {
                     className="w-full text-left"
                   >
                     <div
-                      className="border-b border-divider-rule py-3 px-2 transition-[border-color] duration-[var(--transition-fast)]"
-                      style={{ borderLeftColor: activeStage === stage.key ? stage.color : "transparent", borderLeftWidth: "3px" }}
+                      className="border-b border-divider-rule py-3 px-3 transition-all duration-[var(--transition-fast)]"
+                      style={{
+                        borderLeft: activeStage === stage.key ? `4px solid ${stage.color}` : "4px solid transparent",
+                        backgroundColor: activeStage === stage.key ? "var(--bg-surface)" : "transparent",
+                      }}
                     >
                       <div className="flex items-center gap-3">
-                        <span className="font-serif text-lg" style={{ color: stage.color }}>{stage.name}</span>
+                        <span className="font-serif text-xl" style={{ color: stage.color }}>{stage.name}</span>
                         <span className="text-xs text-fg-muted font-serif">{stage.desc}</span>
                       </div>
                     </div>
@@ -109,51 +116,53 @@ export default function LiujingPage() {
             </div>
           </section>
 
+          {/* Selected stage detail — plate-frame with copper corners */}
           {selected && (
-            <section className="mb-10 plate-frame p-6">
-              <div className="flex items-center gap-3 mb-4 border-b border-divider-rule pb-3">
+            <section className="mb-10 plate-frame p-8 copper-corners">
+              <div className="flex items-center gap-3 mb-5 border-b-2 border-copper/20 pb-4">
                 <Tag variant={selected.tagVariant}>{selected.name}经</Tag>
                 <span className="text-fg-secondary text-sm font-serif">{selected.desc}</span>
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <div>
-                  <h3 className="engraving-label mb-2">SYMPTOMS · 主要症状</h3>
-                  <ul className="space-y-1">
+                  <h3 className="engraving-label mb-3">SYMPTOMS · 主要症状</h3>
+                  <ul className="space-y-2">
                     {selected.symptoms.map((s) => (
                       <li key={s} className="text-sm text-fg-secondary font-serif flex items-start gap-2">
-                        <span style={{ color: selected.color }}>·</span>{s}
+                        <span style={{ color: selected.color }}>●</span>{s}
                       </li>
                     ))}
                   </ul>
                 </div>
                 <div>
-                  <h3 className="engraving-label mb-2">FORMULA · 代表方剂</h3>
+                  <h3 className="engraving-label mb-3">FORMULA · 代表方剂</h3>
                   <p className="text-sm text-fg-secondary font-serif">{selected.formula}</p>
-                  <Link href={`/fangji?q=${encodeURIComponent(selected.formula.split(" / ")[0])}`} className="text-xs text-accent-primary hover:underline mt-2 inline-block font-serif">查看方剂 →</Link>
+                  <Link href={`/fangji?q=${encodeURIComponent(selected.formula.split(" / ")[0])}`} className="text-xs text-accent-primary hover:underline mt-3 inline-block font-serif">查看方剂 →</Link>
                 </div>
                 <div>
-                  <h3 className="engraving-label mb-2">PULSE · 脉象</h3>
+                  <h3 className="engraving-label mb-3">PULSE · 脉象</h3>
                   <p className="text-sm text-fg-secondary font-serif">{selected.pulse}</p>
                 </div>
               </div>
-              <div className="mt-4 pt-3 border-t border-divider-rule">
+              <div className="mt-6 pt-4 border-t border-divider-rule">
                 <Link href="/wenzhen" className="text-xs text-accent-primary hover:underline font-serif">前往问诊 →</Link>
               </div>
             </section>
           )}
 
-          <div className="ornamental-rule my-10"><span>◆</span></div>
+          <div className="ornamental-rule my-12"><span>◆</span></div>
 
-          <section className="mt-10">
+          {/* 七步辨证 — 编号段落 */}
+          <section className="mt-12">
             <h2 className="section-title font-serif text-base text-accent-ink mb-6">七步辨证思维</h2>
-            <div className="plate-frame p-6">
-              <ol className="space-y-4">
+            <div className="plate-frame p-8">
+              <ol className="space-y-5">
                 {STEPS.map((item) => (
-                  <li key={item.step} className="flex items-start gap-4 border-b border-divider-rule pb-3 last:border-b-0 last:pb-0">
-                    <span className="font-mono text-sm text-copper mt-0.5">{item.step}.</span>
+                  <li key={item.step} className="flex items-start gap-5 border-b border-divider-rule pb-4 last:border-b-0 last:pb-0">
+                    <span className="font-mono text-base text-copper font-semibold mt-0.5">{item.step}.</span>
                     <div>
                       <p className="text-sm font-serif text-fg-primary">{item.title}</p>
-                      <p className="text-xs text-fg-muted mt-0.5">{item.desc}</p>
+                      <p className="text-xs text-fg-muted mt-1 leading-relaxed">{item.desc}</p>
                     </div>
                   </li>
                 ))}

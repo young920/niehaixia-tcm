@@ -4,7 +4,8 @@
    倪海厦·经方中医问诊 — Design Tokens
    Direction: 铜版药典 — Copperplate Pharmacopoeia
    Vibe: Vintage botanical illustration book,
-         engraved plates, sepia inks, double rules
+         engraved plates, sepia inks, double rules,
+         leather binding, paper grain texture
    ============================================ */
 
 :root {
@@ -12,8 +13,9 @@
   --bg-base: #f4ede4;
   --bg-card: #faf6ef;
   --bg-card-solid: #faf6ef;
-  --bg-surface: rgba(92, 74, 58, 0.04);
-  --bg-sidebar: #e8dfd2;
+  --bg-surface: rgba(92, 74, 58, 0.06);
+  --bg-sidebar: #d9cfc0;
+  --bg-sidebar-hover: rgba(92, 74, 58, 0.08);
 
   /* --- Sepia Ink Foreground --- */
   --fg-primary: #3c2a1a;
@@ -40,6 +42,8 @@
   --color-ink: #2a1e14;
   --color-ink-light: #8a7562;
   --color-vermillion: #8b3a2a;
+  --color-leather: #3c2a1a;
+  --color-leather-warm: #5c3d2a;
 
   /* --- 六经辨证色 (muted copperplate tones) --- */
   --liujing-taiyang: #b8962e;
@@ -60,17 +64,18 @@
   --pill-radius: 999px;
 
   /* --- Borders: Engraving Lines --- */
-  --border-copper: rgba(160, 112, 48, 0.40);
-  --border-copper-thick: rgba(160, 112, 48, 0.60);
-  --border-sepia: rgba(92, 74, 58, 0.20);
-  --border-sepia-thick: rgba(92, 74, 58, 0.35);
-  --border-subtle: rgba(92, 74, 58, 0.08);
-  --divider-rule: rgba(92, 74, 58, 0.15);
+  --border-copper: rgba(160, 112, 48, 0.50);
+  --border-copper-thick: rgba(160, 112, 48, 0.70);
+  --border-sepia: rgba(92, 74, 58, 0.25);
+  --border-sepia-thick: rgba(92, 74, 58, 0.40);
+  --border-subtle: rgba(92, 74, 58, 0.10);
+  --divider-rule: rgba(92, 74, 58, 0.18);
 
   /* --- Shadows (warm sepia, not grey) --- */
-  --shadow-card: 0 1px 4px rgba(42, 26, 14, 0.06);
-  --shadow-thumbnail: 0 3px 12px rgba(42, 26, 14, 0.08);
-  --shadow-elevated: 0 8px 28px rgba(42, 26, 14, 0.10);
+  --shadow-card: 0 2px 8px rgba(42, 26, 14, 0.08);
+  --shadow-thumbnail: 0 3px 12px rgba(42, 26, 14, 0.10);
+  --shadow-elevated: 0 8px 28px rgba(42, 26, 14, 0.12);
+  --shadow-inset: inset 0 1px 3px rgba(42, 26, 14, 0.06);
 
   /* --- Typography --- */
   --base-line-height: 1.8;
@@ -113,6 +118,8 @@
   --color-ink: var(--color-ink);
   --color-ink-light: var(--color-ink-light);
   --color-vermillion: var(--color-vermillion);
+  --color-leather: var(--color-leather);
+  --color-leather-warm: var(--color-leather-warm);
 
   --color-liujing-taiyang: var(--liujing-taiyang);
   --color-liujing-yangming: var(--liujing-yangming);
@@ -132,12 +139,18 @@
   --radius-pill: var(--pill-radius);
 }
 
-/* --- Vellum Texture Background --- */
+/* ============================================
+   Base Styles — Vellum Paper with Visible Grain
+   ============================================ */
 body {
   background-color: var(--bg-base);
   background-image:
-    radial-gradient(ellipse at 30% 20%, rgba(160, 112, 48, 0.04) 0%, transparent 60%),
-    radial-gradient(ellipse at 70% 80%, rgba(92, 74, 58, 0.03) 0%, transparent 60%);
+    /* Subtle fiber/grain noise */
+    url("data:image/svg+xml,%3Csvg width='200' height='200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E"),
+    /* Warm light spots */
+    radial-gradient(ellipse at 25% 15%, rgba(160, 112, 48, 0.06) 0%, transparent 55%),
+    radial-gradient(ellipse at 75% 85%, rgba(92, 74, 58, 0.04) 0%, transparent 55%),
+    radial-gradient(ellipse at 50% 50%, rgba(160, 112, 48, 0.03) 0%, transparent 70%);
   color: var(--fg-primary);
   font-family: var(--font-serif);
   line-height: var(--base-line-height);
@@ -159,22 +172,26 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 ::-webkit-scrollbar {
-  width: 5px;
+  width: 6px;
 }
 ::-webkit-scrollbar-track {
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(92, 74, 58, 0.2);
+  background: rgba(92, 74, 58, 0.25);
   border-radius: 0px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(92, 74, 58, 0.35);
+  background: rgba(92, 74, 58, 0.40);
 }
 
-/* --- Section Title: 铜版花线 --- */
+/* ============================================
+   Decorative System — Copperplate Engravings
+   ============================================ */
+
+/* --- Section Title: Thick Copper Rule --- */
 .section-title {
-  border-top: 2px solid var(--border-copper);
+  border-top: 3px solid var(--color-copper);
   padding-top: 0.75rem;
 }
 
@@ -184,28 +201,129 @@ h1, h2, h3, h4, h5, h6 {
   align-items: center;
   gap: 0.75rem;
   color: var(--color-copper);
-  opacity: 0.5;
+  opacity: 0.7;
+  font-size: 0.8rem;
 }
 .ornamental-rule::before,
 .ornamental-rule::after {
   content: "";
   flex: 1;
-  height: 1px;
-  background: var(--border-copper);
+  height: 1.5px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    var(--border-copper) 15%,
+    var(--border-copper) 85%,
+    transparent
+  );
 }
 
-/* --- Double Rule (plate frame) --- */
+/* --- Double Rule (plate frame) — PROMINENT --- */
 .plate-frame {
-  border: 1px solid var(--border-sepia);
-  outline: 1px solid var(--border-sepia);
-  outline-offset: 3px;
+  position: relative;
+  border: 1.5px solid var(--border-copper);
+  outline: 1px solid var(--border-copper);
+  outline-offset: 4px;
   background: var(--bg-card);
+  box-shadow: var(--shadow-inset);
+}
+
+/* --- Page Border — book page margin effect --- */
+.page-border {
+  position: relative;
+  border: 1px solid var(--border-sepia);
+  box-shadow: var(--shadow-card);
+  background: var(--bg-card);
+}
+.page-border::before {
+  content: "";
+  position: absolute;
+  inset: 6px;
+  border: 1px solid var(--border-sepia-light);
+  pointer-events: none;
+}
+
+/* --- Copper Corner Ornaments --- */
+.copper-corners {
+  position: relative;
+}
+.copper-corners::before,
+.copper-corners::after {
+  content: "❧";
+  position: absolute;
+  color: var(--color-copper);
+  opacity: 0.35;
+  font-size: 1rem;
+  line-height: 1;
+}
+.copper-corners::before {
+  top: -2px;
+  left: -2px;
+}
+.copper-corners::after {
+  bottom: -2px;
+  right: -2px;
+  transform: rotate(180deg);
 }
 
 /* --- Engraving Label: small caps style --- */
 .engraving-label {
   font-family: var(--font-serif);
   font-size: 0.7rem;
-  letter-spacing: 0.15em;
+  letter-spacing: 0.18em;
   color: var(--color-copper);
+  text-transform: uppercase;
+}
+
+/* --- Drop Cap (decorative first character) --- */
+.drop-cap::first-letter {
+  float: left;
+  font-size: 3.2em;
+  line-height: 0.8;
+  padding-right: 0.1em;
+  color: var(--color-copper);
+  font-weight: 400;
+}
+
+/* --- Book Spine Line (vertical edge) --- */
+.book-spine {
+  position: relative;
+}
+.book-spine::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: 3px;
+  background: linear-gradient(
+    to bottom,
+    var(--color-copper) 0%,
+    var(--border-copper) 50%,
+    var(--color-copper) 100%
+  );
+  opacity: 0.6;
+}
+
+/* --- Leather Texture Background --- */
+.leather-bg {
+  background-color: var(--color-leather);
+  background-image:
+    url("data:image/svg+xml,%3Csvg width='100' height='100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.5' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23n)' opacity='0.06'/%3E%3C/svg%3E"),
+    linear-gradient(135deg, rgba(92, 61, 42, 0.15) 0%, transparent 50%, rgba(92, 61, 42, 0.10) 100%);
+}
+
+/* --- Fleuron / Decorative Divider Variants --- */
+.fleuron-diamond { text-align: center; color: var(--color-copper); opacity: 0.6; font-size: 1.2rem; letter-spacing: 0.5em; }
+.fleuron-rule { display: flex; align-items: center; gap: 1rem; color: var(--color-copper); opacity: 0.5; }
+.fleuron-rule::before, .fleuron-rule::after { content: ""; flex: 1; height: 1px; background: var(--border-copper); }
+
+/* --- Ink Wash (subtle tinted background) --- */
+.ink-wash {
+  background: linear-gradient(
+    135deg,
+    var(--bg-surface) 0%,
+    transparent 40%,
+    var(--bg-surface) 100%
+  );
 }

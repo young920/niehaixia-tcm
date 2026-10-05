@@ -11,11 +11,11 @@ interface CardProps {
 
 /**
  * 铜版药典 Card — 雕刻铜版插图式
- * default: 单线框 + 羊皮纸底
- * plate:   双线框 (plate-frame) + 内衬留白
+ * default: 铜色顶线 + 羊皮纸底 + 墨色边框
+ * plate:   双线框 (plate-frame) + 内阴影
  */
 const VARIANT_CLASSES: Record<Variant, string> = {
-  default: "bg-bg-card border border-sepia",
+  default: "bg-bg-card border border-sepia-thick border-t-[3px] border-t-copper",
   plate: "plate-frame",
 };
 
@@ -29,8 +29,9 @@ export function Card({
     <div
       className={`
         rounded-[var(--card-radius)] p-5
+        shadow-[var(--shadow-card)]
         ${VARIANT_CLASSES[variant]}
-        ${hover ? "transition-[border-color,opacity] duration-[var(--transition-fast)] hover:border-copper hover:opacity-90" : ""}
+        ${hover ? "transition-[border-color,box-shadow,opacity] duration-[var(--transition-fast)] hover:border-copper hover:shadow-[var(--shadow-elevated)] hover:opacity-95" : ""}
         ${className}
       `}
     >

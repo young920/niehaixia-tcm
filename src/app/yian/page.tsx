@@ -60,14 +60,14 @@ export default function YianPage() {
             <p className="engraving-label">CASE RECORDS · 849 例倪师真实医案</p>
           </div>
 
-          <div className="flex gap-3 mb-6 max-w-xl border-b border-divider-rule pb-4">
+          <div className="flex gap-3 mb-6 max-w-xl border-b-2 border-copper/20 pb-4">
             <input type="text" value={query} onChange={(e) => setQuery(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && search(query)} placeholder="输入疾病或症状，如：乳癌、失眠…"
-              className="flex-1 bg-transparent border-b border-sepia px-1 py-2 text-sm text-fg-primary font-serif placeholder:text-fg-muted/50 focus:outline-none focus:border-copper transition-[border-color] duration-[var(--transition-fast)]"
+              className="flex-1 bg-transparent border-b-2 border-sepia px-1 py-2.5 text-sm text-fg-primary font-serif placeholder:text-fg-muted/50 focus:outline-none focus:border-copper transition-[border-color] duration-[var(--transition-fast)]"
               disabled={loading}
             />
             <button onClick={() => search(query)} disabled={loading || !query.trim()}
-              className="text-sm font-serif text-copper px-4 py-2 border border-copper tracking-wider transition-[background-color,color,border-color] duration-[var(--transition-fast)] hover:bg-copper hover:text-fg-inverse hover:border-copper disabled:opacity-40 disabled:pointer-events-none">
+              className="text-sm font-serif text-copper px-5 py-2 border-2 border-copper tracking-wider transition-[background-color,color,border-color] duration-[var(--transition-fast)] hover:bg-copper hover:text-fg-inverse hover:border-copper disabled:opacity-40 disabled:pointer-events-none">
               检索
             </button>
           </div>
@@ -75,7 +75,7 @@ export default function YianPage() {
           <div className="flex flex-wrap gap-3 mb-8">
             {QUICK_QUERIES.map((q) => (
               <button key={q.label} onClick={() => search(q.query)}
-                className="text-xs font-serif text-fg-secondary border border-sepia bg-vellum-warm px-3 py-1 transition-[color,border-color,background-color] duration-[var(--transition-fast)] hover:text-accent-primary hover:border-copper hover:bg-surface">
+                className="text-xs font-serif text-fg-secondary border border-sepia bg-vellum-warm px-3 py-1.5 transition-[color,border-color,background-color] duration-[var(--transition-fast)] hover:text-accent-primary hover:border-copper hover:bg-surface">
                 {q.label}
               </button>
             ))}
@@ -84,12 +84,12 @@ export default function YianPage() {
           {!result && !loading && (
             <section>
               <h2 className="section-title font-serif text-base text-accent-ink mb-4">按疾病分类</h2>
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                 {CATEGORIES.map((cat) => (
                   <button key={cat.label} onClick={() => search(cat.query)} className="text-left">
                     <Card hover className="h-full">
                       <div className="flex items-center gap-2 mb-2">
-                        <span className="inline-block w-2 h-2 rotate-45" style={{ backgroundColor: `var(--liujing-${cat.liujing})` }} />
+                        <span className="inline-block w-2.5 h-2.5 rotate-45" style={{ backgroundColor: `var(--liujing-${cat.liujing})` }} />
                         <span className="font-serif text-sm text-accent-ink">{cat.label}</span>
                       </div>
                       <p className="text-xs text-fg-muted">{cat.query}</p>
@@ -100,12 +100,12 @@ export default function YianPage() {
             </section>
           )}
 
-          {loading && <div className="plate-frame p-6"><p className="text-sm text-fg-muted font-serif">正在检索医案…</p></div>}
+          {loading && <div className="plate-frame p-8"><p className="text-sm text-fg-muted font-serif">正在检索医案…</p></div>}
 
           {result && !loading && (
-            <div className="plate-frame p-6">
+            <div className="plate-frame p-8 copper-corners">
               <div className="text-fg-primary text-sm leading-relaxed whitespace-pre-wrap font-serif">{result}</div>
-              <div className="mt-4 pt-4 border-t border-divider-rule">
+              <div className="mt-6 pt-4 border-t border-divider-rule">
                 <Button variant="ghost" onClick={() => { setResult(null); setQuery(""); }}>← 返回医案分类</Button>
               </div>
             </div>
