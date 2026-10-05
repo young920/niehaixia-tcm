@@ -101,9 +101,18 @@ export default function BencaoPage() {
       <div className="flex-1 flex flex-col">
         <Header />
         <main className="flex-1 px-[var(--grid-outer)] py-8 lg:px-16 lg:py-12 max-w-[var(--main-grid-width-reading)]">
-          <div className="section-title pt-4 mb-6">
-            <h1 className="font-sans text-lg text-fg-primary mb-1">本草查询</h1>
-            <p className="engraving-label">MATERIA MEDICA</p>
+          <div className="section-title pt-4 mb-6 flex items-start justify-between">
+            <div>
+              <h1 className="font-sans text-lg text-fg-primary mb-1">本草查询</h1>
+              <p className="engraving-label">MATERIA MEDICA</p>
+            </div>
+            {/* 铜版人参 — 药典插图 */}
+            <img
+              src="/images/ginseng-illustration.png"
+              alt="人参版画"
+              className="w-16 h-auto opacity-60 mt-1"
+              loading="lazy"
+            />
           </div>
 
           {/* Search */}

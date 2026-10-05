@@ -75,9 +75,18 @@ export default function LiujingPage() {
       <div className="flex-1 flex flex-col">
         <Header />
         <main className="flex-1 px-[var(--grid-outer)] py-8 lg:px-16 lg:py-12 max-w-[var(--main-grid-width-reading)]">
-          <div className="section-title pt-4 mb-8">
-            <h1 className="font-sans text-lg text-fg-primary mb-1">六经辨证</h1>
-            <p className="engraving-label">SIX-CHANNEL DIFFERENTIATION</p>
+          <div className="section-title pt-4 mb-8 flex items-start justify-between">
+            <div>
+              <h1 className="font-sans text-lg text-fg-primary mb-1">六经辨证</h1>
+              <p className="engraving-label">SIX-CHANNEL DIFFERENTIATION</p>
+            </div>
+            {/* 朱文方印 — 经典标识 */}
+            <img
+              src="/images/seal-stamp.png"
+              alt="方印"
+              className="w-12 h-12 opacity-70 mt-1"
+              loading="lazy"
+            />
           </div>
 
           {/* 传变路径 — 极简竖轴 */}

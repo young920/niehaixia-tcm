@@ -76,6 +76,15 @@ export default function HomePage() {
               「中医很简单，就是阴阳气血。你搞懂了，一通百通。」
               <span className="not-italic ml-2 text-xs">—— 倪海厦</span>
             </p>
+            {/* 水墨装饰 — 沉静不争 */}
+            <div className="mb-8">
+              <img
+                src="/images/hero-ink-wash.png"
+                alt="水墨山水"
+                className="w-full max-w-md rounded-[var(--card-radius)] opacity-80"
+                loading="lazy"
+              />
+            </div>
             <Link
               href="/wenzhen"
               className="text-sm text-accent-primary border-b border-accent-primary/30 pb-0.5 transition-[border-color] duration-[var(--transition-fast)] hover:border-accent-primary"
@@ -83,6 +92,16 @@ export default function HomePage() {
               开始问诊 →
             </Link>
           </section>
+
+          {/* 横幅装饰 — 铜版本草线绘 */}
+          <div className="mb-16 overflow-hidden">
+            <img
+              src="/images/botanical-banner.png"
+              alt="本草线绘"
+              className="w-full h-12 object-cover opacity-60"
+              loading="lazy"
+            />
+          </div>
 
           {/* Feature Grid — 干净卡片 */}
           <section className="grid grid-cols-1 md:grid-cols-2 gap-3 lg:gap-4 mb-20">
