@@ -98,7 +98,7 @@ export default function HomePage() {
             <img
               src="/images/botanical-banner.png"
               alt="本草线绘"
-              className="w-full h-32 object-cover opacity-60"
+              className="w-full h-40 object-contain opacity-60"
               loading="lazy"
             />
           </div>
