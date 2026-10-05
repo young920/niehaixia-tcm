@@ -15,7 +15,7 @@ jobs:
         with:
           node-version: 24
 
-      - run: npm install
+      - run: npm install --legacy-peer-deps
 
       - name: Ensure Pages project exists
         env:
@@ -76,7 +76,7 @@ jobs:
                 "env_vars": {
                   "AI_API_KEY": { "value": "'"${{ secrets.AI_API_KEY }}"'" },
                   "AI_API_BASE": { "value": "'"${{ secrets.AI_API_BASE }}"'" },
-                  "AI_MODEL": { "value": "'"${{ secrets.AI_API_MODEL }}"'" }
+                  "AI_MODEL": { "value": "'"${{ secrets.AI_MODEL }}"'" }
                 }
               }
             }' \
