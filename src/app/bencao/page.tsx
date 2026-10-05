@@ -47,7 +47,6 @@ export default function BencaoPage() {
     setLoading(true);
     setResult(null);
     setQuery(text);
-
     try {
       const res = await fetch("/api/knowledge", {
         method: "POST",
@@ -70,64 +69,46 @@ export default function BencaoPage() {
       <div className="flex-1 flex flex-col">
         <Header />
         <main className="flex-1 px-[var(--grid-outer)] py-8 lg:px-16 lg:py-12 max-w-[var(--main-grid-width-reading)]">
-          <div className="border-t border-brass pt-4 mb-6">
+          <div className="section-title pt-4 mb-6">
             <h1 className="font-serif text-2xl text-accent-ink mb-2">本草查询</h1>
-            <p className="text-ink-light text-sm">
-              神农本草经 345 种
-            </p>
+            <p className="engraving-label">MATERIA MEDICA · 神农本草经 345 种</p>
           </div>
 
-          {/* Search */}
-          <div className="flex gap-3 mb-6 max-w-xl border-b border-divider-wood pb-4">
-            <input
-              type="text"
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              onKeyDown={(e) => e.key === "Enter" && search(query)}
-              placeholder="输入药名，如：桂枝、附子…"
-              className="flex-1 bg-transparent border-b border-wood px-1 py-2 text-sm text-fg-primary font-serif placeholder:text-ink-light/50 focus:outline-none focus:border-accent-primary transition-[border-color] duration-[var(--transition-fast)]"
+          <div className="flex gap-3 mb-6 max-w-xl border-b border-divider-rule pb-4">
+            <input type="text" value={query} onChange={(e) => setQuery(e.target.value)}
+              onKeyDown={(e) => e.key === "Enter" && search(query)} placeholder="输入药名，如：桂枝、附子…"
+              className="flex-1 bg-transparent border-b border-sepia px-1 py-2 text-sm text-fg-primary font-serif placeholder:text-fg-muted/50 focus:outline-none focus:border-copper transition-[border-color] duration-[var(--transition-fast)]"
               disabled={loading}
             />
-            <button
-              onClick={() => search(query)}
-              disabled={loading || !query.trim()}
-              className="text-sm font-serif text-brass px-4 py-2 border border-wood transition-[background-color,color,border-color] duration-[var(--transition-fast)] hover:bg-accent-primary hover:text-fg-inverse hover:border-accent-primary disabled:opacity-40 disabled:pointer-events-none"
-            >
+            <button onClick={() => search(query)} disabled={loading || !query.trim()}
+              className="text-sm font-serif text-copper px-4 py-2 border border-copper tracking-wider transition-[background-color,color,border-color] duration-[var(--transition-fast)] hover:bg-copper hover:text-fg-inverse hover:border-copper disabled:opacity-40 disabled:pointer-events-none">
               查药
             </button>
           </div>
 
-          {/* Quick Queries */}
-          <div className="flex flex-wrap gap-2 mb-8">
+          <div className="flex flex-wrap gap-3 mb-8">
             {QUICK_QUERIES.map((q) => (
-              <button
-                key={q.label}
-                onClick={() => search(q.query)}
-                className="text-xs font-serif text-fg-secondary border-b border-divider-wood px-1 py-1.5 transition-[color,border-color] duration-[var(--transition-fast)] hover:text-accent-primary hover:border-accent-primary/30"
-              >
+              <button key={q.label} onClick={() => search(q.query)}
+                className="text-xs font-serif text-fg-secondary border border-sepia bg-vellum-warm px-3 py-1 transition-[color,border-color,background-color] duration-[var(--transition-fast)] hover:text-accent-primary hover:border-copper hover:bg-surface">
                 {q.label}
               </button>
             ))}
           </div>
 
-          {/* 三品分类 — 三个药柜大格 */}
           {!result && !loading && (
             <section>
               <h2 className="section-title font-serif text-base text-accent-ink mb-4">三品分类</h2>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 {PIN_COLUMNS.map((col) => (
-                  <div key={col.title} className="border-t-2 bg-bg-card p-5" style={{ borderTopColor: `var(--liujing-${col.liujing})` }}>
-                    <div className="flex items-center gap-2 mb-3">
+                  <div key={col.title} className="plate-frame p-5">
+                    <div className="flex items-center gap-2 mb-3 border-b border-divider-rule pb-2">
                       <span className="font-serif text-sm" style={{ color: `var(--liujing-${col.liujing})` }}>{col.title}</span>
-                      <span className="text-xs text-ink-light">{col.desc}</span>
+                      <span className="engraving-label">{col.desc}</span>
                     </div>
-                    <div className="flex flex-wrap gap-x-3 gap-y-1">
+                    <div className="flex flex-wrap gap-x-3 gap-y-1.5">
                       {col.herbs.map((herb) => (
-                        <button
-                          key={herb}
-                          onClick={() => search(`${herb}的性味、归经、主治和倪师临床用法`)}
-                          className="text-xs font-serif text-fg-secondary border-b border-divider-wood px-0.5 py-0.5 transition-[color,border-color] duration-[var(--transition-fast)] hover:text-accent-primary hover:border-accent-primary/30"
-                        >
+                        <button key={herb} onClick={() => search(`${herb}的性味、归经、主治和倪师临床用法`)}
+                          className="text-xs font-serif text-fg-secondary border-b border-sepia px-0.5 py-0.5 transition-[color,border-color] duration-[var(--transition-fast)] hover:text-accent-primary hover:border-copper/30">
                           {herb}
                         </button>
                       ))}
@@ -138,21 +119,13 @@ export default function BencaoPage() {
             </section>
           )}
 
-          {loading && (
-            <div className="border border-divider-wood bg-bg-card p-6">
-              <p className="text-sm text-ink-light font-serif">正在检索本草…</p>
-            </div>
-          )}
+          {loading && <div className="plate-frame p-6"><p className="text-sm text-fg-muted font-serif">正在检索本草…</p></div>}
 
           {result && !loading && (
-            <div className="border border-divider-wood bg-bg-card p-6">
-              <div className="text-fg-primary text-sm leading-relaxed whitespace-pre-wrap font-serif">
-                {result}
-              </div>
-              <div className="mt-4 pt-4 border-t border-divider-wood">
-                <Button variant="ghost" onClick={() => { setResult(null); setQuery(""); }}>
-                  ← 返回本草目录
-                </Button>
+            <div className="plate-frame p-6">
+              <div className="text-fg-primary text-sm leading-relaxed whitespace-pre-wrap font-serif">{result}</div>
+              <div className="mt-4 pt-4 border-t border-divider-rule">
+                <Button variant="ghost" onClick={() => { setResult(null); setQuery(""); }}>← 返回本草目录</Button>
               </div>
             </div>
           )}

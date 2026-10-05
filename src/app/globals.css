@@ -2,48 +2,52 @@
 
 /* ============================================
    倪海厦·经方中医问诊 — Design Tokens
-   Base: muuuuu.org Japanese minimalist
-   Adapted: 药柜格物 — 纸色·木纹·铜器·墨色
+   Direction: 铜版药典 — Copperplate Pharmacopoeia
+   Vibe: Vintage botanical illustration book,
+         engraved plates, sepia inks, double rules
    ============================================ */
 
 :root {
-  /* --- Paper Backgrounds --- */
-  --bg-base: #f5f0e8;
-  --bg-card: #faf7f2;
-  --bg-card-solid: #faf7f2;
-  --bg-surface: rgba(139, 94, 60, 0.05);
-  --bg-sidebar: #efe9df;
+  /* --- Vellum / Parchment Backgrounds --- */
+  --bg-base: #f4ede4;
+  --bg-card: #faf6ef;
+  --bg-card-solid: #faf6ef;
+  --bg-surface: rgba(92, 74, 58, 0.04);
+  --bg-sidebar: #e8dfd2;
 
-  /* --- Ink Foreground --- */
-  --fg-primary: #2a2017;
-  --fg-secondary: #4a3f30;
-  --fg-muted: #8a7e6e;
-  --fg-inverse: #faf7f2;
+  /* --- Sepia Ink Foreground --- */
+  --fg-primary: #3c2a1a;
+  --fg-secondary: #5c4a3a;
+  --fg-muted: #8a7562;
+  --fg-inverse: #faf6ef;
 
-  /* --- Accent: 药石色系 --- */
-  --accent-primary: #8b5e3c;
-  --accent-secondary: #7a6b52;
-  --accent-warm: #c4854a;
+  /* --- Accent: Copper & Verillion --- */
+  --accent-primary: #7a5230;
+  --accent-secondary: #6b4528;
+  --accent-warm: #a07030;
   --accent-cold: #4a6b8a;
-  --accent-danger: #8c3a3a;
-  --accent-ink: #2a2017;
+  --accent-danger: #8b3a2a;
+  --accent-ink: #2a1e14;
 
-  /* --- Material: 木·铜·纸 --- */
-  --color-brass: #b8943e;
-  --color-wood: #8c6d4a;
-  --color-wood-light: rgba(140, 109, 74, 0.15);
-  --color-paper: #f5f0e8;
-  --color-paper-warm: #faf7f2;
-  --color-ink: #2a2017;
-  --color-ink-light: #8a7e6e;
+  /* --- Plate Materials: Copper · Sepia · Vellum --- */
+  --color-copper: #a07030;
+  --color-copper-light: rgba(160, 112, 48, 0.25);
+  --color-copper-faint: rgba(160, 112, 48, 0.10);
+  --color-sepia: #5c4a3a;
+  --color-sepia-light: rgba(92, 74, 58, 0.15);
+  --color-vellum: #f4ede4;
+  --color-vellum-warm: #faf6ef;
+  --color-ink: #2a1e14;
+  --color-ink-light: #8a7562;
+  --color-vermillion: #8b3a2a;
 
-  /* --- 六经辨证色 --- */
-  --liujing-taiyang: #d4a843;
-  --liujing-yangming: #c45c3c;
-  --liujing-shaoyang: #5c8a6e;
-  --liujing-taiyin: #c4a35a;
-  --liujing-shaoyin: #3a5c7a;
-  --liujing-jueyin: #6b3a6b;
+  /* --- 六经辨证色 (muted copperplate tones) --- */
+  --liujing-taiyang: #b8962e;
+  --liujing-yangming: #b3502e;
+  --liujing-shaoyang: #4d7a5c;
+  --liujing-taiyin: #a08838;
+  --liujing-shaoyin: #3a5068;
+  --liujing-jueyin: #5c305c;
 
   /* --- Layout --- */
   --main-grid-width: 110rem;
@@ -51,25 +55,27 @@
   --side-nav-width: 23rem;
   --grid-gap: 5rem;
   --grid-outer: 1.5rem;
-  --section-radius: 1rem;
-  --card-radius: 0.25rem;
+  --section-radius: 0rem;
+  --card-radius: 0rem;
   --pill-radius: 999px;
 
-  /* --- Borders & Dividers --- */
-  --border-wood: rgba(140, 109, 74, 0.25);
-  --border-brass: rgba(184, 148, 62, 0.3);
-  --border-subtle: rgba(139, 94, 60, 0.1);
-  --divider-wood: rgba(140, 109, 74, 0.12);
+  /* --- Borders: Engraving Lines --- */
+  --border-copper: rgba(160, 112, 48, 0.40);
+  --border-copper-thick: rgba(160, 112, 48, 0.60);
+  --border-sepia: rgba(92, 74, 58, 0.20);
+  --border-sepia-thick: rgba(92, 74, 58, 0.35);
+  --border-subtle: rgba(92, 74, 58, 0.08);
+  --divider-rule: rgba(92, 74, 58, 0.15);
 
-  /* --- Shadows (warm ink, not grey) --- */
-  --shadow-card: 0 1px 3px rgba(42, 32, 23, 0.06);
-  --shadow-thumbnail: 0 3px 10px rgba(42, 32, 23, 0.08);
-  --shadow-elevated: 0 8px 24px rgba(42, 32, 23, 0.10);
+  /* --- Shadows (warm sepia, not grey) --- */
+  --shadow-card: 0 1px 4px rgba(42, 26, 14, 0.06);
+  --shadow-thumbnail: 0 3px 12px rgba(42, 26, 14, 0.08);
+  --shadow-elevated: 0 8px 28px rgba(42, 26, 14, 0.10);
 
   /* --- Typography --- */
-  --base-line-height: 1.75;
+  --base-line-height: 1.8;
   --base-letter-spacing: 0.02rem;
-  --heading-letter-spacing: 0.06rem;
+  --heading-letter-spacing: 0.08rem;
 
   /* --- Transitions --- */
   --transition-fast: 150ms ease;
@@ -97,13 +103,16 @@
   --color-accent-danger: var(--accent-danger);
   --color-accent-ink: var(--accent-ink);
 
-  --color-brass: var(--color-brass);
-  --color-wood: var(--color-wood);
-  --color-wood-light: var(--color-wood-light);
-  --color-paper: var(--color-paper);
-  --color-paper-warm: var(--color-paper-warm);
+  --color-copper: var(--color-copper);
+  --color-copper-light: var(--color-copper-light);
+  --color-copper-foutton-faint: var(--color-copper-faint);
+  --color-sepia: var(--color-sepia);
+  --color-sepia-light: var(--color-sepia-light);
+  --color-vellum: var(--color-vellum);
+  --color-vellum-warm: var(--color-vellum-warm);
   --color-ink: var(--color-ink);
   --color-ink-light: var(--color-ink-light);
+  --color-vermillion: var(--color-vermillion);
 
   --color-liujing-taiyang: var(--liujing-taiyang);
   --color-liujing-yangming: var(--liujing-yangming);
@@ -114,7 +123,7 @@
 
   /* --- Font Family --- */
   --font-serif: "Noto Serif SC", "Source Han Serif SC", Georgia, serif;
-  --font-sans: "Noto Sans SC", "Source Han Sans SC", system-ui, sans-serif;
+  --font-sans: "Noto Serif SC", "Source Han Serif SC", Georgia, serif;
   --font-mono: "JetBrains Mono", "Fira Code", monospace;
 
   /* --- Border Radius --- */
@@ -123,15 +132,14 @@
   --radius-pill: var(--pill-radius);
 }
 
-/* --- Paper Texture Background --- */
+/* --- Vellum Texture Background --- */
 body {
   background-color: var(--bg-base);
   background-image:
-    radial-gradient(circle at 20% 50%, rgba(139, 94, 60, 0.03) 0%, transparent 50%),
-    radial-gradient(circle at 80% 20%, rgba(139, 94, 60, 0.02) 0%, transparent 50%),
-    radial-gradient(circle at 50% 80%, rgba(184, 148, 62, 0.02) 0%, transparent 50%);
+    radial-gradient(ellipse at 30% 20%, rgba(160, 112, 48, 0.04) 0%, transparent 60%),
+    radial-gradient(ellipse at 70% 80%, rgba(92, 74, 58, 0.03) 0%, transparent 60%);
   color: var(--fg-primary);
-  font-family: var(--font-sans);
+  font-family: var(--font-serif);
   line-height: var(--base-line-height);
   letter-spacing: var(--base-letter-spacing);
   -webkit-font-smoothing: antialiased;
@@ -157,15 +165,47 @@ h1, h2, h3, h4, h5, h6 {
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(140, 109, 74, 0.2);
-  border-radius: 2px;
+  background: rgba(92, 74, 58, 0.2);
+  border-radius: 0px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(140, 109, 74, 0.35);
+  background: rgba(92, 74, 58, 0.35);
 }
 
-/* --- Section Title: 书页题签 --- */
+/* --- Section Title: 铜版花线 --- */
 .section-title {
-  border-top: 1px solid var(--border-brass);
+  border-top: 2px solid var(--border-copper);
   padding-top: 0.75rem;
+}
+
+/* --- Ornamental Rule: ═══◆═══ --- */
+.ornamental-rule {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: var(--color-copper);
+  opacity: 0.5;
+}
+.ornamental-rule::before,
+.ornamental-rule::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--border-copper);
+}
+
+/* --- Double Rule (plate frame) --- */
+.plate-frame {
+  border: 1px solid var(--border-sepia);
+  outline: 1px solid var(--border-sepia);
+  outline-offset: 3px;
+  background: var(--bg-card);
+}
+
+/* --- Engraving Label: small caps style --- */
+.engraving-label {
+  font-family: var(--font-serif);
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  color: var(--color-copper);
 }

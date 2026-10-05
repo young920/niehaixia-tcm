@@ -8,18 +8,19 @@ interface TagProps {
 }
 
 /**
- * 药柜签条风格 — 左侧色条 + 纸色底 + 衬线字
- * 模拟中药柜抽屉上的标签签条
+ * 铜版药典 Tag — 植物版画标签
+ * 左侧铜色竖线 + 羊皮纸底 + 衬线体
+ * 像植物插图上的分类标签
  */
 export function Tag({ variant = "default", children }: TagProps) {
   const barColor =
     variant === "default"
-      ? "var(--color-wood)"
+      ? "var(--color-sepia)"
       : `var(--liujing-${variant})`;
 
   return (
     <span
-      className="inline-flex items-center gap-0 bg-paper-warm rounded-none px-2.5 py-0.5 text-xs font-serif"
+      className="inline-flex items-center gap-0 bg-vellum-warm rounded-none px-2.5 py-0.5 text-xs font-serif"
       style={{ borderLeft: `3px solid ${barColor}`, color: barColor }}
     >
       {children}

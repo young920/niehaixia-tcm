@@ -30,8 +30,9 @@ const PRESET_SYMPTOMS = [
 ];
 
 /**
- * 师徒对答 — 问诊页面
- * 非聊天界面，而是师徒问答的书写式布局
+ * 铜版药典 问诊 — 临床病案记录式
+ * 非聊天界面，而是病案格式的书写式布局
+ * 每条对答如病案中的"主诉""辨证"条目
  */
 export default function WenzhenPage() {
   const [messages, setMessages] = useState<Message[]>([]);
@@ -97,58 +98,55 @@ export default function WenzhenPage() {
       <div className="flex-1 flex flex-col">
         <Header />
         <main className="flex-1 flex flex-col max-h-screen">
-          {/* 对答区域 */}
           <div ref={scrollRef} className="flex-1 overflow-y-auto px-[var(--grid-outer)] py-8 lg:px-16">
-            {/* 空状态 — 处方笺 */}
+            {/* 空状态 — 病案首页格式 */}
             {messages.length === 0 && (
               <div className="max-w-2xl mx-auto">
-                <div className="border-t border-brass pt-4 mb-8">
+                <div className="section-title pt-4 mb-8">
                   <h2 className="font-serif text-2xl text-accent-ink">经方问诊</h2>
-                  <p className="text-ink-light text-sm mt-1">以倪海厦六经辨证思维引导问诊</p>
+                  <p className="engraving-label mt-2">CONSULTATIO · EXAMINATIO · DIAGNOSIS</p>
                 </div>
 
-                {/* 处方笺表单感 */}
-                <div className="border border-divider-wood bg-bg-card p-6 mb-8">
+                <div className="plate-frame p-6 mb-8">
                   <div className="space-y-4">
-                    <div className="border-b border-divider-wood pb-3">
-                      <span className="font-serif text-sm text-brass">主诉</span>
-                      <p className="text-ink-light text-sm mt-1">请描述您的主要症状与不适</p>
+                    <div className="border-b border-divider-rule pb-3">
+                      <span className="engraving-label">CHIEF COMPLAINT · 主诉</span>
+                      <p className="text-fg-muted text-sm font-serif mt-1">请描述您的主要症状与不适</p>
                     </div>
                     <div className="grid grid-cols-3 gap-4">
                       {[
-                        { label: "寒热", hint: "怕冷/发热" },
-                        { label: "汗出", hint: "有汗/无汗" },
-                        { label: "头身", hint: "头痛/身重" },
+                        { label: "寒热", sub: "CHILL & FEVER" },
+                        { label: "汗出", sub: "SWEATING" },
+                        { label: "头身", sub: "HEAD & BODY" },
                       ].map((field) => (
-                        <div key={field.label} className="border-b border-divider-wood pb-2">
-                          <span className="font-serif text-xs text-brass">{field.label}</span>
-                          <p className="text-ink-light text-xs mt-0.5">{field.hint}</p>
+                        <div key={field.label} className="border-b border-divider-rule pb-2">
+                          <span className="font-serif text-sm text-copper">{field.label}</span>
+                          <p className="engraving-label mt-0.5">{field.sub}</p>
                         </div>
                       ))}
                     </div>
                     <div className="grid grid-cols-3 gap-4">
                       {[
-                        { label: "二便", hint: "大便/小便" },
-                        { label: "饮食", hint: "口渴/食欲" },
-                        { label: "睡眠", hint: "失眠/嗜卧" },
+                        { label: "二便", sub: "EXCRETION" },
+                        { label: "饮食", sub: "APPETITE" },
+                        { label: "睡眠", sub: "SLEEP" },
                       ].map((field) => (
-                        <div key={field.label} className="border-b border-divider-wood pb-2">
-                          <span className="font-serif text-xs text-brass">{field.label}</span>
-                          <p className="text-ink-light text-xs mt-0.5">{field.hint}</p>
+                        <div key={field.label} className="border-b border-divider-rule pb-2">
+                          <span className="font-serif text-sm text-copper">{field.label}</span>
+                          <p className="engraving-label mt-0.5">{field.sub}</p>
                         </div>
                       ))}
                     </div>
                   </div>
                 </div>
 
-                {/* 常见症状快捷条目 */}
                 <div className="space-y-2">
-                  <p className="text-xs text-ink-light font-serif mb-2">常见症状</p>
+                  <p className="engraving-label mb-2">COMMON SYMPTOMS · 常见症状</p>
                   {PRESET_SYMPTOMS.map((symptom) => (
                     <button
                       key={symptom}
                       onClick={() => sendMessage(symptom)}
-                      className="block w-full text-left text-sm text-fg-secondary bg-transparent border-b border-divider-wood py-2.5 px-1 font-serif transition-[color,border-color] duration-[var(--transition-fast)] hover:text-accent-primary hover:border-accent-primary/30"
+                      className="block w-full text-left text-sm text-fg-secondary bg-transparent border-b border-divider-rule py-2.5 px-1 font-serif transition-[color,border-color] duration-[var(--transition-fast)] hover:text-accent-primary hover:border-copper/30"
                     >
                       {symptom}
                     </button>
@@ -157,26 +155,20 @@ export default function WenzhenPage() {
               </div>
             )}
 
-            {/* 师徒对答 */}
-            {messages.map((msg) => (
+            {messages.map((msg, i) => (
               <div key={msg.id} className="max-w-2xl mx-auto mb-6">
                 <div
-                  className="border-b-2 pl-4 py-4"
+                  className="border-l-2 pl-4 py-4"
                   style={{
-                    borderLeftColor: msg.role === "user" ? "var(--color-brass)" : "var(--accent-primary)",
+                    borderLeftColor: msg.role === "user" ? "var(--color-copper)" : "var(--accent-primary)",
                     borderLeftWidth: "3px",
                     backgroundColor: msg.role === "user" ? "var(--bg-surface)" : "transparent",
                   }}
                 >
-                  <span
-                    className="text-xs font-serif mb-2 block"
-                    style={{
-                      color: msg.role === "user" ? "var(--color-brass)" : "var(--accent-primary)",
-                    }}
-                  >
-                    {msg.role === "user" ? "问" : "答"}
+                  <span className="engraving-label mb-2 block">
+                    {msg.role === "user" ? `§${i + 1} INTERROGATIO · 问` : `§${i + 1} DIAGNOSIS · 辨`}
                   </span>
-                  <p className="text-sm text-fg-primary leading-relaxed whitespace-pre-wrap">
+                  <p className="text-sm text-fg-primary leading-relaxed whitespace-pre-wrap font-serif">
                     {msg.content}
                   </p>
                 </div>
@@ -190,7 +182,6 @@ export default function WenzhenPage() {
               </div>
             ))}
 
-            {/* Loading */}
             {loading && (
               <div className="max-w-2xl mx-auto mb-6">
                 <div
@@ -200,15 +191,14 @@ export default function WenzhenPage() {
                     borderLeftWidth: "3px",
                   }}
                 >
-                  <span className="text-xs font-serif text-accent-primary mb-2 block">答</span>
-                  <p className="text-sm text-ink-light">倪师正在辨证…</p>
+                  <span className="engraving-label mb-2 block">DIAGNOSIS · 辨</span>
+                  <p className="text-sm text-fg-muted font-serif">倪师正在辨证…</p>
                 </div>
               </div>
             )}
           </div>
 
-          {/* 输入区 — 处方笺底部 */}
-          <div className="border-t border-divider-wood bg-bg-base px-[var(--grid-outer)] py-4 lg:px-16">
+          <div className="border-t border-divider-rule bg-bg-base px-[var(--grid-outer)] py-4 lg:px-16">
             <div className="flex gap-3 max-w-2xl mx-auto">
               <input
                 type="text"
@@ -216,13 +206,13 @@ export default function WenzhenPage() {
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={(e) => e.key === "Enter" && sendMessage(input)}
                 placeholder="描述症状…"
-                className="flex-1 bg-transparent border-b border-wood px-2 py-2.5 text-sm text-fg-primary font-serif placeholder:text-ink-light/50 focus:outline-none focus:border-accent-primary transition-[border-color] duration-[var(--transition-fast)]"
+                className="flex-1 bg-transparent border-b border-sepia px-2 py-2.5 text-sm text-fg-primary font-serif placeholder:text-fg-muted/50 focus:outline-none focus:border-copper transition-[border-color] duration-[var(--transition-fast)]"
                 disabled={loading}
               />
               <button
                 onClick={() => sendMessage(input)}
                 disabled={loading || !input.trim()}
-                className="text-sm font-serif text-brass px-4 py-2 border border-wood transition-[background-color,color,border-color] duration-[var(--transition-fast)] hover:bg-accent-primary hover:text-fg-inverse hover:border-accent-primary disabled:opacity-40 disabled:pointer-events-none"
+                className="text-sm font-serif text-copper px-4 py-2 border border-copper tracking-wider transition-[background-color,color,border-color] duration-[var(--transition-fast)] hover:bg-copper hover:text-fg-inverse hover:border-copper disabled:opacity-40 disabled:pointer-events-none"
               >
                 问诊
               </button>

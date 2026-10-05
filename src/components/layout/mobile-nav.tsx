@@ -9,18 +9,18 @@ const NAV_ITEMS = [
 ] as const;
 
 /**
- * 底部药签 — 移动端导航
- * 文字标签浮于纸色底上，铜色下划线标识
+ * 铜版药典 MobileNav — 书签式底部导航
+ * 花线分隔 + 衬线标签 + 铜色活跃标识
  */
 export function MobileNav() {
   return (
-    <nav className="lg:hidden fixed bottom-0 left-0 right-0 z-50 bg-bg-base border-t border-divider-wood">
+    <nav className="lg:hidden fixed bottom-0 left-0 right-0 z-50 bg-bg-base border-t border-divider-rule">
       <div className="flex justify-around items-center h-14">
         {NAV_ITEMS.map((item) => (
           <Link
             key={item.href}
             href={item.href}
-            className="flex flex-col items-center gap-0.5 text-ink-light text-xs font-serif transition-[color] duration-[var(--transition-fast)] active:text-accent-primary active:decoration-brass active:underline active:underline-offset-4"
+            className="flex flex-col items-center gap-0.5 text-fg-muted text-xs font-serif transition-[color] duration-[var(--transition-fast)] active:text-accent-primary active:decoration-copper active:underline active:underline-offset-4"
           >
             <span>{item.label}</span>
           </Link>
